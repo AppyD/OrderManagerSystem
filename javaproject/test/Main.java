@@ -16,6 +16,9 @@ public class Main{
 		final Logger logger = Logger.getLogger(Main.class.getName());
 		PropertyConfigurator.configure("resources/log4j.properties");
 		logger.debug("This is a test message.");
+
+
+
 		System.out.println("TEST: This program tests OrderManager");
 
 		//Create and start 2 sample clients
