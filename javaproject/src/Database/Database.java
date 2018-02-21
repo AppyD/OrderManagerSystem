@@ -5,4 +5,5 @@ public class Database{
 	public static void write(Object o){
 		System.out.println(o.toString());
 	}
+	// dear god help us
 }
