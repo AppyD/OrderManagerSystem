@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.Logger;
 import LiveMarketData.LiveMarketData;
@@ -13,7 +12,7 @@ public class Main{
 		// Set up logging for benchmarking purposes
 		final Logger logger = Logger.getLogger(Main.class.getName());
 		PropertyConfigurator.configure("resources/log4j.properties");
-		//logger.debug("This is a test message.");
+		logger.debug("This is a test message.");
 
 		System.out.println("TEST: This program tests OrderManager");
 
@@ -53,12 +52,12 @@ class MockClient extends Thread{
 			SampleClient client = new SampleClient(port);
 			if(port == 2000){
 				//TODO why does this take an arg?
-				client.sendOrder();
-				int id = client.sendOrder();
+				client.sendOrder(null);
+				int id = client.sendOrder(null);
 				//TODO client.sendCancel(id);
 				client.messageHandler();
 			}else{
-				client.sendOrder();
+				client.sendOrder(null);
 				client.messageHandler();
 			}
 		} catch (IOException e) {

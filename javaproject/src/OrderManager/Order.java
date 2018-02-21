@@ -26,10 +26,6 @@ public class Order implements Serializable{
 		return slices.size()-1;
 	}
 
-	public int sizeFilled(){
-		int filledSoFar=0;
-		for(Fill f:fills){
-			filledSoFar+=f.size;
 	public int sizeFilled() {
 		int filledSoFar = 0;
 
