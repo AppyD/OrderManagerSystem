@@ -2,16 +2,8 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import LiveMarketData.LiveMarketData;
 import OrderManager.OrderManager;
-
-<<<<<<< HEAD
-//Testing to see if changed.
-// AppyTestComment1
-=======
-//HarryTest Comment 1
->>>>>>> 4864a2793cec465389a6c400482036e420e52a09
 
 public class Main{
 
@@ -30,12 +22,12 @@ public class Main{
 	
 		(new Trader("Trader James",2020)).start();
 		//start order manager
-		InetSocketAddress[] clients={new InetSocketAddress("localhost",2000),
-		                     new InetSocketAddress("localhost",2001)};
-		InetSocketAddress[] routers={new InetSocketAddress("localhost",2010),
-		                     new InetSocketAddress("localhost",2011)};
-		InetSocketAddress trader=new InetSocketAddress("localhost",2020);
-		LiveMarketData liveMarketData=new SampleLiveMarketData();
+		InetSocketAddress[] clients = {new InetSocketAddress("localhost",2000),
+									   new InetSocketAddress("localhost",2001)};
+		InetSocketAddress[] routers = {new InetSocketAddress("localhost",2010),
+		                     		   new InetSocketAddress("localhost",2011)};
+		InetSocketAddress   trader  =  new InetSocketAddress("localhost",2020);
+		LiveMarketData liveMarketData = new SampleLiveMarketData();
 		(new MockOM("Order Manager",routers,clients,trader,liveMarketData)).start();
 	}
 
