@@ -6,8 +6,12 @@ import java.util.logging.Logger;
 import LiveMarketData.LiveMarketData;
 import OrderManager.OrderManager;
 
+<<<<<<< HEAD
 //Testing to see if changed.
 // AppyTestComment1
+=======
+//HarryTest Comment 1
+>>>>>>> 4864a2793cec465389a6c400482036e420e52a09
 
 public class Main{
 
