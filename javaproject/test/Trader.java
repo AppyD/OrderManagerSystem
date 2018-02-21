@@ -47,8 +47,7 @@ public class Trader extends Thread implements TradeScreen {
 							is.readObject();
 							break; //TODO
 						case fill:
-							is.readInt();
-							is.readObject();
+							fill(is.readInt(), (Order)is.readObject());
 							break; //TODO
 					}
 				} else {
@@ -94,4 +93,12 @@ public class Trader extends Thread implements TradeScreen {
 		sliceOrder(id,orders.get(id).sizeRemaining()/2);
 	}
 
+	@Override
+	// method made by Appy --> needs to be edited to make sense!
+	// right now it is just set to flush the output stream so that the exception in Main is raised.
+	public void fill(int id, Order o) throws IOException{
+		os = new ObjectOutputStream(omConn.getOutputStream());
+		os.writeInt(id);
+		os.flush();
+	}
 }

@@ -10,4 +10,5 @@ public interface TradeScreen {
 	void acceptOrder(int id) throws IOException;
 	void sliceOrder(int id,int sliceSize) throws IOException;
 	void price(int id,Order o) throws InterruptedException, IOException;
+	void fill(int id, Order o) throws IOException;
 }
