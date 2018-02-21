@@ -50,8 +50,8 @@ class MockClient extends Thread{
 	public void run(){
 		try {
 			SampleClient client = new SampleClient(port);
-			if(port == 2000){
-				client.sendOrder();
+			if(port == 2000){ // differentiates between clients
+				client.sendOrder(); // creates and sends an order
 				int id = client.sendOrder();
 				//TODO client.sendCancel(id);
 				client.messageHandler();
