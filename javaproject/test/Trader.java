@@ -10,16 +10,20 @@ import javax.net.ServerSocketFactory;
 import OrderManager.Order;
 import TradeScreen.TradeScreen;
 
-public class Trader extends Thread implements TradeScreen{
-	private HashMap<Integer,Order> orders=new HashMap<Integer,Order>();
+public class Trader extends Thread implements TradeScreen {
+
+	private HashMap<Integer,Order> orders = new HashMap<Integer,Order>();
 	private static Socket omConn;
 	private int port;
+	ObjectInputStream  is;
+	ObjectOutputStream os;
+
 	Trader(String name,int port){
 		this.setName(name);
 		this.port=port;
 	}
-	ObjectInputStream  is;
-	ObjectOutputStream os;
+
+
 	public void run(){
 		//OM will connect to us
 		try {
@@ -48,6 +52,7 @@ public class Trader extends Thread implements TradeScreen{
 			e.printStackTrace();
 		}
 	}
+
 	@Override
 	public void newOrder(int id,Order order) throws IOException, InterruptedException {
 		//TODO the order should go in a visual grid, but not needed for test purposes
@@ -72,10 +77,12 @@ public class Trader extends Thread implements TradeScreen{
 		os.writeInt(sliceSize);
 		os.flush();
 	}
+
 	@Override
-	public void price(int id,Order o) throws InterruptedException, IOException {
+	public void price(int id, Order o) throws InterruptedException, IOException {
 		//TODO should update the trade screen
 		Thread.sleep(2134);
 		sliceOrder(id,orders.get(id).sizeRemaining()/2);
 	}
+
 }

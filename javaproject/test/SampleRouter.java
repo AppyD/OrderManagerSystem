@@ -12,16 +12,19 @@ import Ref.Instrument;
 import Ref.Ric;
 
 public class SampleRouter extends Thread implements Router{
-	private static final Random RANDOM_NUM_GENERATOR=new Random();
-	private static final Instrument[] INSTRUMENTS={new Instrument(new Ric("VOD.L")), new Instrument(new Ric("BP.L")), new Instrument(new Ric("BT.L"))};
+
+	private static final Random RANDOM_NUM_GENERATOR = new Random();
+	private static final Instrument[] INSTRUMENTS = {new Instrument(new Ric("VOD.L")), new Instrument(new Ric("BP.L")), new Instrument(new Ric("BT.L"))};
 	private Socket omConn;
 	private int port;
+	ObjectInputStream is;
+	ObjectOutputStream os;
+
 	public SampleRouter(String name,int port){
 		this.setName(name);
 		this.port=port;
 	}
-	ObjectInputStream is;
-	ObjectOutputStream os;
+
 	public void run(){
 		//OM will connect to us
 		try {
@@ -44,6 +47,7 @@ public class SampleRouter extends Thread implements Router{
 			e.printStackTrace();
 		}
 	}
+
 	@Override
 	public void routeOrder(int id,int sliceId,int size,Instrument i) throws IOException, InterruptedException{ //MockI.show(""+order);
 		int fillSize=RANDOM_NUM_GENERATOR.nextInt(size);
@@ -62,6 +66,7 @@ public class SampleRouter extends Thread implements Router{
 	@Override
 	public void sendCancel(int id,int sliceId,int size,Instrument i){ //MockI.show(""+order);
 	}
+
 	@Override
 	public void priceAtSize(int id, int sliceId,Instrument i, int size) throws IOException{
 		os=new ObjectOutputStream(omConn.getOutputStream());
@@ -71,4 +76,5 @@ public class SampleRouter extends Thread implements Router{
 		os.writeDouble(199*RANDOM_NUM_GENERATOR.nextDouble());
 		os.flush();
 	}
+
 }

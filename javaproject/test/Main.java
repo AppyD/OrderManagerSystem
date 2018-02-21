@@ -6,17 +6,18 @@ import java.util.logging.Logger;
 import LiveMarketData.LiveMarketData;
 import OrderManager.OrderManager;
 
-// I PUT A COMMENT HERE
-
+//Testing to see if changed.
 
 public class Main{
-	public static void main(String[] args) throws IOException{
-		System.out.println("TEST: this program tests ordermanager");
 
-		//start sample clients
-		MockClient c1=new MockClient("Client 1",2000);
+	public static void main(String[] args) throws IOException{
+		System.out.println("TEST: This program tests OrderManager");
+
+		//Create and start 2 sample clients
+		MockClient c1 = new MockClient("Client 1",2000);
+		MockClient c2 = new MockClient("Client 2",2001);
 		c1.start();
-		(new MockClient("Client 2",2001)).start();
+		c2.start();
 		
 		//start sample routers
 		(new SampleRouter("Router LSE",2010)).start();
@@ -32,20 +33,24 @@ public class Main{
 		LiveMarketData liveMarketData=new SampleLiveMarketData();
 		(new MockOM("Order Manager",routers,clients,trader,liveMarketData)).start();
 	}
+
 }
+
 class MockClient extends Thread{
 	int port;
+
 	MockClient(String name,int port){
 		this.port=port;
 		this.setName(name);
 	}
+
 	public void run(){
 		try {
-			SampleClient client=new SampleClient(port);
-			if(port==2000){
+			SampleClient client = new SampleClient(port);
+			if(port == 2000){
 				//TODO why does this take an arg?
 				client.sendOrder(null);
-				int id=client.sendOrder(null);
+				int id = client.sendOrder(null);
 				//TODO client.sendCancel(id);
 				client.messageHandler();
 			}else{
@@ -65,6 +70,7 @@ class MockOM extends Thread{
 	InetSocketAddress[] routers;
 	InetSocketAddress trader;
 	LiveMarketData liveMarketData;
+
 	MockOM(String name,InetSocketAddress[] routers,InetSocketAddress[] clients,InetSocketAddress trader,LiveMarketData liveMarketData){
 		this.clients=clients;
 		this.routers=routers;
@@ -72,6 +78,7 @@ class MockOM extends Thread{
 		this.liveMarketData=liveMarketData;
 		this.setName(name);
 	}
+
 	@Override
 	public void run(){
 		try{
