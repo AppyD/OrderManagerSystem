@@ -15,7 +15,7 @@ public class Main{
 		// Set up logging for benchmarking purposes
 		final Logger logger = Logger.getLogger(Main.class.getName());
 		PropertyConfigurator.configure("resources/log4j.properties");
-		logger.debug("This is a test message.");
+		//logger.debug("This is a test message.");
 
 
 
@@ -57,12 +57,12 @@ class MockClient extends Thread{
 			SampleClient client = new SampleClient(port);
 			if(port == 2000){
 				//TODO why does this take an arg?
-				client.sendOrder(null);
-				int id = client.sendOrder(null);
+				client.sendOrder();
+				int id = client.sendOrder();
 				//TODO client.sendCancel(id);
 				client.messageHandler();
 			}else{
-				client.sendOrder(null);
+				client.sendOrder();
 				client.messageHandler();
 			}
 		} catch (IOException e) {

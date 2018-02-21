@@ -21,6 +21,7 @@ public class Order implements Serializable{
 		slices.add(new Order(id,ClientOrderID,instrument,sliceSize));
 		return slices.size()-1;
 	}
+
 	public int sizeFilled(){
 		int filledSoFar=0;
 		for(Fill f:fills){
