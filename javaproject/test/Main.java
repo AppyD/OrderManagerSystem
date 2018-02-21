@@ -1,11 +1,9 @@
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.logging.Level;
-
+import java.util.logging.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.Logger;
-
-
 import LiveMarketData.LiveMarketData;
 import OrderManager.OrderManager;
 
@@ -16,8 +14,6 @@ public class Main{
 		final Logger logger = Logger.getLogger(Main.class.getName());
 		PropertyConfigurator.configure("resources/log4j.properties");
 		//logger.debug("This is a test message.");
-
-
 
 		System.out.println("TEST: This program tests OrderManager");
 
@@ -33,12 +29,12 @@ public class Main{
 	
 		(new Trader("Trader James",2020)).start();
 		//start order manager
-		InetSocketAddress[] clients={new InetSocketAddress("localhost",2000),
-		                     new InetSocketAddress("localhost",2001)};
-		InetSocketAddress[] routers={new InetSocketAddress("localhost",2010),
-		                     new InetSocketAddress("localhost",2011)};
-		InetSocketAddress trader=new InetSocketAddress("localhost",2020);
-		LiveMarketData liveMarketData=new SampleLiveMarketData();
+		InetSocketAddress[] clients = {new InetSocketAddress("localhost",2000),
+									   new InetSocketAddress("localhost",2001)};
+		InetSocketAddress[] routers = {new InetSocketAddress("localhost",2010),
+		                     		   new InetSocketAddress("localhost",2011)};
+		InetSocketAddress   trader  =  new InetSocketAddress("localhost",2020);
+		LiveMarketData liveMarketData = new SampleLiveMarketData();
 		(new MockOM("Order Manager",routers,clients,trader,liveMarketData)).start();
 	}
 
