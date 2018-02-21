@@ -89,7 +89,6 @@ class MockOM extends Thread{
 			new OrderManager(routers,clients,trader,liveMarketData);
 		}catch(IOException | ClassNotFoundException | InterruptedException ex){
 			java.util.logging.Logger.getLogger(MockOM.class.getName()).log(Level.SEVERE,null,ex);
-			System.out.println("Is it ever entering this part of the code?");
 		}
 	}
 }

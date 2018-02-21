@@ -29,7 +29,7 @@ public class Trader extends Thread implements TradeScreen {
 			omConn = ServerSocketFactory.getDefault().createServerSocket(port).accept();
 			
 			//is = new ObjectInputStream(omConn.getInputStream());
-			InputStream s=omConn.getInputStream(); //if i try to create an objectInputStream before we have data it will block
+			InputStream s = omConn.getInputStream(); //if i try to create an objectInputStream before we have data it will block
 			while(true) {
 				if(0 < s.available()){
 					is = new ObjectInputStream(s);  //TODO: Check if we need to create each time. This will block if no data, but maybe we can still try to create it once instead of repeatedly
