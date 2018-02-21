@@ -1,7 +1,6 @@
 package OrderClient;
 
 import java.io.Serializable;
-
 import Ref.Instrument;
 
 public class NewOrderSingle implements Serializable{
