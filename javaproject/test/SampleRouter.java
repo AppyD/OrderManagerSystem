@@ -78,4 +78,5 @@ public class SampleRouter extends Thread implements Router{
 		os.writeDouble(199*RANDOM_NUM_GENERATOR.nextDouble());
 		os.flush();
 	}
+
 }
