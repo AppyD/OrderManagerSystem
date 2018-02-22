@@ -50,7 +50,7 @@ class MockClient extends Thread{
 				//TODO client.sendCancel(id);
 				client.messageHandler();
 			} else {
-				if (port == 2000) { // differentiates between clients
+				if (port == 2004) { // differentiates between clients
 					client.sendOrder(); // creates and sends an order
 					int id = client.sendOrder();
 					//TODO client.sendCancel(id);
@@ -91,7 +91,7 @@ class MockOM extends Thread{
 			// Set up logging
 			final Logger logger = Logger.getLogger(Main.class.getName());
 			PropertyConfigurator.configure("resources/log4j.properties");
-			logger.getLogger(MockOM.class.getName()).debug("SEVERE; null",ex);
+			logger.debug("SEVERE; null",ex);
 		}
 	}
 }
