@@ -28,7 +28,7 @@ public class Main{
 		                     		   new InetSocketAddress("localhost",2011)};
 		InetSocketAddress   trader  =  new InetSocketAddress("localhost",2020);
 		LiveMarketData liveMarketData = new SampleLiveMarketData();
-		(new MockOM("Order Manager",routers,clients,trader,liveMarketData)).start();
+		(new MockOM("Order Manager", routers, clients, trader, liveMarketData)).start();
 	}
 
 }
@@ -47,13 +47,13 @@ class MockClient extends Thread{
 			if (port == 2000) {
 				client.sendOrder();
 				int id = client.sendOrder();
-				//TODO client.sendCancel(id);
+				//TODO client.sendCancel(transactionID);
 				client.messageHandler();
 			} else {
 				if (port == 2004) { // differentiates between clients
 					client.sendOrder(); // creates and sends an order
 					int id = client.sendOrder();
-					//TODO client.sendCancel(id);
+					//TODO client.sendCancel(transactionID);
 					client.messageHandler();
 				} else {
 					client.sendOrder();

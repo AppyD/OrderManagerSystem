@@ -12,7 +12,7 @@ import TradeScreen.TradeScreen;
 
 public class Trader extends Thread implements TradeScreen {
 
-	private HashMap<Integer,Order> orders = new HashMap<Integer,Order>();
+	private HashMap<Integer,Order> orders = new HashMap<>();
 	private static Socket omConn;
 	private int port;
 	ObjectInputStream  is;
@@ -52,7 +52,7 @@ public class Trader extends Thread implements TradeScreen {
 					}
 				} else {
 					//System.out.println("Trader Waiting for data to be available - sleep 1s");
-					Thread.sleep(1000);
+//					Thread.sleep(1000);
 				}
 			}
 		} catch (IOException | ClassNotFoundException | InterruptedException e) {
@@ -93,7 +93,6 @@ public class Trader extends Thread implements TradeScreen {
 		sliceOrder(id,orders.get(id).sizeRemaining()/2);
 	}
 
-	@Override
 	// method made by Appy --> needs to be edited to make sense!
 	// right now it is just set to flush the output stream so that the exception in Main is raised.
 	public void fill(int id, Order o) throws IOException{

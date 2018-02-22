@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import Ref.Instrument;
 
 public class Order implements Serializable{
-	public int id; //TODO these should all be longs
-	short orderRouter;
+	public int transactionID; 						//TODO these should all be longs
 	public int clientOrderID;
+    int clientID;
+//	short orderRouter;
 	private int size;
 	double[] bestPrices;
 	int bestPriceCount;
-    int clientID;
     public Instrument instrument;
     public double initialMarketPrice;
     ArrayList<Order> slices;
@@ -39,7 +39,7 @@ public class Order implements Serializable{
 
 	// Adds a new order to the 'slices' ArrayList, and returns the index of this new order within the List.
 	public int newSlice(int sliceSize) {
-		slices.add(new Order(id, clientOrderID, instrument, sliceSize));
+		slices.add(new Order(transactionID, clientOrderID, instrument, sliceSize));
 		return slices.size()-1;
 	}
 
@@ -162,7 +162,7 @@ class Basket{
 }
 
 class Fill implements Serializable {
-	//long id;
+	//long transactionID;
 	int size;
 	double price;
 

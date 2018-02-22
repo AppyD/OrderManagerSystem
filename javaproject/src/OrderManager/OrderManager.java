@@ -33,7 +33,7 @@ public class OrderManager {
 				s.setKeepAlive(true);
 				return s;
 			} catch (IOException e) {
-				Thread.sleep(1000);
+//				Thread.sleep(1000);
 				tryCounter++;
 			}
 		}
@@ -244,7 +244,7 @@ public class OrderManager {
 		}
 		ObjectOutputStream os = new ObjectOutputStream(orderRouters[minIndex].getOutputStream());
 		os.writeObject(Router.api.routeOrder);
-		os.writeInt(o.id);
+		os.writeInt(o.transactionID);
 		os.writeInt(sliceId);
 		os.writeInt(o.sizeRemaining());
 		os.writeObject(o.instrument);

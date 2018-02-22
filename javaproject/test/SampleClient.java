@@ -19,7 +19,7 @@ public class SampleClient extends Mock implements Client{
 													 new Instrument(new Ric("BP.L")),
 													 new Instrument(new Ric("BT.L"))};
 	private static final HashMap OUT_QUEUE = new HashMap(); //queue for outgoing orders
-	private int id = 0; //message id number
+	private int id = 0; //message transactionID number
 	private Socket omConn; //connection to order manager
 	enum methods{newOrderSingleAcknowledgement,dontKnow};
 
@@ -36,7 +36,7 @@ public class SampleClient extends Mock implements Client{
 		Instrument instrument = INSTRUMENTS[RANDOM_NUM_GENERATOR.nextInt(INSTRUMENTS.length)];
 		NewOrderSingle nos = new NewOrderSingle(size,instid,instrument);
 
-		show("sendOrder: id="+id+" size="+size+" instrument=" + INSTRUMENTS[instid].toString());
+		show("sendOrder: transactionID="+id+" size="+size+" instrument=" + INSTRUMENTS[instid].toString());
 		OUT_QUEUE.put(id,nos);
 		if(omConn.isConnected()){
 			ObjectOutputStream os = new ObjectOutputStream(omConn.getOutputStream());
@@ -51,7 +51,7 @@ public class SampleClient extends Mock implements Client{
 
 	@Override
 	public void sendCancel(int idToCancel){
-		show("sendCancel: id=" + idToCancel);
+		show("sendCancel: transactionID=" + idToCancel);
 		if(omConn.isConnected()){
 			//OMconnection.sendMessage("cancel",idToCancel);
 		}
