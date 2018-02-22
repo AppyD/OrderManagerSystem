@@ -200,7 +200,7 @@ public class OrderManager {
 	}
 
 	private void cancelOrder() {
-		//TODO?
+		//TODO
 	}
 
 	private void newFill(int id, int sliceId, int size, double price) throws IOException {
