@@ -1,19 +1,13 @@
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.logging.Level;
-import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import LiveMarketData.LiveMarketData;
 import OrderManager.OrderManager;
 
 public class Main{
 
 	public static void main(String[] args) throws IOException{
-		// Set up logging for benchmarking purposes
-		final Logger logger = Logger.getLogger(Main.class.getName());
-		PropertyConfigurator.configure("resources/log4j.properties");
-		logger.debug("This is a test message.");
-
 		System.out.println("TEST: This program tests OrderManager");
 
 		//Create and start 2 sample clients
@@ -39,7 +33,7 @@ public class Main{
 
 }
 
-class MockClient extends Thread {
+class MockClient extends Thread{
 	int port;
 
 	MockClient(String name,int port){
@@ -47,7 +41,7 @@ class MockClient extends Thread {
 		this.setName(name);
 	}
 
-	public void run(){
+	public void run() {
 		try {
 			SampleClient client = new SampleClient(port);
 			if (port == 2000) {
@@ -66,13 +60,13 @@ class MockClient extends Thread {
 					client.messageHandler();
 				}
 			}
-		} catch(IOException e){
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-	}
+		catch(IOException e){
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 }
-
 
 class MockOM extends Thread{
 	InetSocketAddress[] clients;
@@ -94,9 +88,10 @@ class MockOM extends Thread{
 			//In order to debug constructors you can do F5 F7 F5
 			new OrderManager(routers,clients,trader,liveMarketData);
 		}catch(IOException | ClassNotFoundException | InterruptedException ex){
-			//Logger.getLogger(MockOM.class.getName()).log(Level.SEVERE,null,ex);
-			//logger.debug();
-			System.out.println("Is it ever entering this part of the code?");
+			// Set up logging
+			final Logger logger = Logger.getLogger(Main.class.getName());
+			PropertyConfigurator.configure("resources/log4j.properties");
+			logger.getLogger(MockOM.class.getName()).debug("SEVERE; null",ex);
 		}
 	}
 }
