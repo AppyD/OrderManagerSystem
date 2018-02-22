@@ -4,3 +4,9 @@ java.io.OptionalDataException
 	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
 	at OrderManager.OrderManager.<init>(OrderManager.java:119)
 	at MockOM.run(Main.java:86)
+22-02-2018 13:54:15 DEBUG [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:119)
+	at MockOM.run(Main.java:87)

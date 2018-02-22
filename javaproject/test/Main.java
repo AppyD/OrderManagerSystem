@@ -3,6 +3,7 @@ import java.net.InetSocketAddress;
 import LiveMarketData.LiveMarketData;
 import OrderManager.OrderManager;
 import Logger.MyLogger;
+import org.apache.log4j.PropertyConfigurator;
 
 public class Main {
 
@@ -86,14 +87,8 @@ class MockOM extends Thread {
 			new OrderManager(routers,clients,trader,liveMarketData);
 		} catch(IOException | ClassNotFoundException | InterruptedException ex){
 			// Set up logging
-<<<<<<< HEAD
 			final MyLogger logger = new MyLogger(MockOM.class.getName());
 			logger.logException(ex);
-=======
-			final Logger logger = Logger.getLogger(Main.class.getName());
-			PropertyConfigurator.configure("resources/log4j.properties");
-			logger.debug("SEVERE; null",ex);
->>>>>>> 5b181406ba7f2722c14a605c2c3b599197c339ea
 		}
 	}
 }
