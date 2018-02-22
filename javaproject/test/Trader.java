@@ -4,6 +4,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.net.ServerSocketFactory;
 
@@ -12,7 +13,7 @@ import TradeScreen.TradeScreen;
 
 public class Trader extends Thread implements TradeScreen {
 
-	private HashMap<Integer,Order> orders = new HashMap<Integer,Order>();
+	private Map<Integer,Order> orders = new HashMap<Integer,Order>();
 	private static Socket omConn;
 	private int port;
 	ObjectInputStream  is;
@@ -24,7 +25,7 @@ public class Trader extends Thread implements TradeScreen {
 	}
 
 	public void run(){
-		//OM will connect to us
+		//OM will connect to us <--- how presumptuous(!)
 		try {
 			omConn = ServerSocketFactory.getDefault().createServerSocket(port).accept();
 			
@@ -52,7 +53,9 @@ public class Trader extends Thread implements TradeScreen {
 					}
 				} else {
 					//System.out.println("Trader Waiting for data to be available - sleep 1s");
+					System.out.println("Sleeping");
 					Thread.sleep(1000);
+
 				}
 			}
 		} catch (IOException | ClassNotFoundException | InterruptedException e) {
@@ -93,7 +96,6 @@ public class Trader extends Thread implements TradeScreen {
 		sliceOrder(id,orders.get(id).sizeRemaining()/2);
 	}
 
-	@Override
 	// method made by Appy --> needs to be edited to make sense!
 	// right now it is just set to flush the output stream so that the exception in Main is raised.
 	public void fill(int id, Order o) throws IOException{

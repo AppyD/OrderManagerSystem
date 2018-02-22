@@ -7,7 +7,7 @@ import OrderManager.OrderManager;
 
 public class Main{
 
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args){
 		System.out.println("TEST: This program tests OrderManager");
 
 		//Create and start 2 sample clients
@@ -74,7 +74,7 @@ class MockOM extends Thread{
 	InetSocketAddress trader;
 	LiveMarketData liveMarketData;
 
-	MockOM(String name,InetSocketAddress[] routers,InetSocketAddress[] clients,InetSocketAddress trader,LiveMarketData liveMarketData){
+	MockOM(String name,InetSocketAddress[] routers,InetSocketAddress[] clients, InetSocketAddress trader, LiveMarketData liveMarketData){
 		this.clients=clients;
 		this.routers=routers;
 		this.trader=trader;
@@ -89,9 +89,9 @@ class MockOM extends Thread{
 			new OrderManager(routers,clients,trader,liveMarketData);
 		}catch(IOException | ClassNotFoundException | InterruptedException ex){
 			// Set up logging
-			final Logger logger = Logger.getLogger(Main.class.getName());
+			final Logger logger = Logger.getLogger(MockOM.class.getName());
 			PropertyConfigurator.configure("resources/log4j.properties");
-			logger.getLogger(MockOM.class.getName()).debug("SEVERE; null",ex);
+			logger.debug("SEVERE; null",ex);
 		}
 	}
 }

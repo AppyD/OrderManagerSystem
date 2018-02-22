@@ -6,18 +6,29 @@ import Ref.Instrument;
 
 public class Order implements Serializable{
 	public int id; //TODO these should all be longs
-	short orderRouter;
 	public int clientOrderID;
+	public Instrument instrument;
+	public double initialMarketPrice;
+
+	short orderRouter;
 	int size;
 	double[] bestPrices;
 	int bestPriceCount;
     int clientID;
-    public Instrument instrument;
-    public double initialMarketPrice;
+
     ArrayList<Order> slices;
     ArrayList<Fill> fills;
     char OrdStatus = 'A'; //OrdStatus is Fix 39, 'A' is 'Pending New'
     //Status state;
+
+	public Order(int clientId, int ClientOrderID, Instrument instrument, int size){
+		this.clientOrderID = ClientOrderID;
+		this.size = size;
+		this.clientID = clientId;
+		this.instrument = instrument;
+		fills = new ArrayList<Fill>();
+		slices = new ArrayList<Order>();
+	}
 
 	public int sliceSizes() {
 		int totalSizeOfSlices = 0;
@@ -152,14 +163,7 @@ public class Order implements Serializable{
 		//state = cancelled
 	}
 
-	public Order(int clientId, int ClientOrderID, Instrument instrument, int size){
-		this.clientOrderID = ClientOrderID;
-		this.size = size;
-		this.clientID = clientId;
-		this.instrument = instrument;
-		fills = new ArrayList<Fill>();
-		slices = new ArrayList<Order>();
-	}
+
 }
 
 class Basket{

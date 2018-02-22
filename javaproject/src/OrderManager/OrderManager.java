@@ -16,18 +16,18 @@ import TradeScreen.TradeScreen;
 public class OrderManager {
 
 	private static LiveMarketData liveMarketData;
-	private Map<Integer,Order> orders = new HashMap<Integer,Order>(); //debugger will do this line as it gives state to the object
+	private Map<Integer,Order> orders = new HashMap<Integer,Order>();
 	//currently recording the number of new order messages we get. TODO why? use it for more?
-	private int id = 0; //debugger will do this line as it gives state to the object
+	private int id = 0;
 	private Socket[] orderRouters; //debugger will skip these lines as they disappear at compile time into 'the object'/stack
 	private Socket[] clients;
 	private Socket trader;
 
-	private Socket connect(InetSocketAddress location) throws InterruptedException {
+	public static Socket connect(InetSocketAddress location) throws InterruptedException {
 		boolean connected=false;
 		int tryCounter=0;
 
-		while(!connected && tryCounter<600) {
+		while(!connected && tryCounter<600) { //NB why is tryCounter so high??
 			try{
 				Socket s = new Socket(location.getHostName(),location.getPort());
 				s.setKeepAlive(true);
@@ -48,11 +48,11 @@ public class OrderManager {
 		//for the router connections, copy the input array into our object field.
 		//but rather than taking the address we create a socket+ephemeral port and connect it to the address
 		this.orderRouters = new Socket[orderRouters.length];
-		int i = 0; //need a counter for the the output array
 		this.clients = new Socket[clients.length];
 		int clientId, routerId;
 		Socket client, router;
 
+		int i = 0; //need a counter for the the output array
 		for (InetSocketAddress location : orderRouters) {
 			this.orderRouters[i] = connect(location);
 			i++;
@@ -60,9 +60,8 @@ public class OrderManager {
 
 		//repeat for the client connections
 		i = 0;
-
 		for (InetSocketAddress location : clients) {
-			this.clients[i]=connect(location);
+			this.clients[i] = connect(location);
 			i++;
 		}
 
