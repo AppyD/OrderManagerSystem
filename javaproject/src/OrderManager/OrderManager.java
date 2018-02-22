@@ -16,7 +16,7 @@ import TradeScreen.TradeScreen;
 public class OrderManager {
 
 	private static LiveMarketData liveMarketData;
-	private Map<Integer,Order> orders = new HashMap<Integer,Order>(); //debugger will do this line as it gives state to the object
+	private Map<Integer,Order> orders = new HashMap<>(); //debugger will do this line as it gives state to the object
 	//currently recording the number of new order messages we get. TODO why? use it for more?
 	private int id = 0; //debugger will do this line as it gives state to the object
 	private Socket[] orderRouters; //debugger will skip these lines as they disappear at compile time into 'the object'/stack
@@ -172,7 +172,7 @@ public class OrderManager {
 		//slice the order. We have to check this is a valid size.
 		//Order has a list of slices, and a list of fills, each slice is a child order and each fill is associated with either a child order or the original order
 		if(sliceSize > o.sizeRemaining() - o.sliceSizes()){
-			System.out.println("error sliceSize is bigger than remaining size to be filled on the order");
+			System.out.println("ERROR: sliceSize is bigger than remaining size to be filled on the order");
 			return;
 		}
 		int sliceId = o.newSlice(sliceSize);

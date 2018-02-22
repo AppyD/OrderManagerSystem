@@ -8,72 +8,75 @@ public class Order implements Serializable{
 	public int id; //TODO these should all be longs
 	short orderRouter;
 	public int clientOrderID;
-	int size;
+	private int size;
 	double[] bestPrices;
 	int bestPriceCount;
     int clientID;
     public Instrument instrument;
     public double initialMarketPrice;
     ArrayList<Order> slices;
-    ArrayList<Fill> fills;
-    char OrdStatus = 'A'; //OrdStatus is Fix 39, 'A' is 'Pending New'
+    private ArrayList<Fill> fills;
+    char OrdStatus = 'A';                 //OrdStatus is Fix 39, 'A' is 'Pending New'
     //Status state;
 
+    // The constructor for a new order.
+    public Order(int clientId, int ClientOrderID, Instrument instrument, int size){
+        this.clientOrderID = ClientOrderID;
+        this.size = size;
+        this.clientID = clientId;
+        this.instrument = instrument;
+        fills = new ArrayList<>();
+        slices = new ArrayList<>();
+    }
+
+    // Calculates the total size of the orders in the 'slices' ArrayList.
 	public int sliceSizes() {
 		int totalSizeOfSlices = 0;
-
 		for (Order c : slices)
 			totalSizeOfSlices += c.size;
-
 		return totalSizeOfSlices;
 	}
 
+	// Adds a new order to the 'slices' ArrayList, and returns the index of this new order within the List.
 	public int newSlice(int sliceSize) {
 		slices.add(new Order(id, clientOrderID, instrument, sliceSize));
 		return slices.size()-1;
 	}
 
-	public int sizeFilled() {
+	// Returns the total size of orders within both 'fills' and 'slices' ArrayLists.
+	private int sizeFilled() {
 		int filledSoFar = 0;
-
-		for(Fill f : fills){
+		for(Fill f : fills)
 			filledSoFar += f.size;
-		}
-
-		for(Order c : slices){
+		for(Order c : slices)
 			filledSoFar += c.sizeFilled();
-		}
-
 		return filledSoFar;
 	}
 
+	// Returns the total size remaining for the order to be completed.
 	public int sizeRemaining(){
 		return size-sizeFilled();
 	}
 
-
-
+	//
 	float price(){
 		//TODO this is buggy as it doesn't take account of slices. Let them fix it
 		float sum = 0;
-
-		for(Fill fill : fills){
+		for(Fill fill : fills)
 			sum += fill.price;
-		}
-
 		return sum/fills.size();
 	}
 
+	//
 	void createFill(int size, double price) {
 		fills.add(new Fill(size, price));
-
-		if (sizeRemaining() == 0) {
+		if (sizeRemaining() == 0)
 			OrdStatus = '2';
-		} else {
+		else
 			OrdStatus = '1';
-		}
 	}
 
+	//
 	void cross(Order matchingOrder){
 		//pair slices first and then parent
 		for(Order slice : slices){
@@ -148,17 +151,9 @@ public class Order implements Serializable{
 		}
 	}
 
+	//
 	void cancel() {
 		//state = cancelled
-	}
-
-	public Order(int clientId, int ClientOrderID, Instrument instrument, int size){
-		this.clientOrderID = ClientOrderID;
-		this.size = size;
-		this.clientID = clientId;
-		this.instrument = instrument;
-		fills = new ArrayList<Fill>();
-		slices = new ArrayList<Order>();
 	}
 }
 
@@ -166,7 +161,7 @@ class Basket{
 	Order[] orders;
 }
 
-class Fill implements Serializable{
+class Fill implements Serializable {
 	//long id;
 	int size;
 	double price;
