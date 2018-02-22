@@ -207,10 +207,9 @@ public class OrderManager {
 		Order o = orders.get(id);
 		o.slices.get(sliceId).createFill(size, price);
 
-		if(o.sizeRemaining() == 0){
+		if(o.sizeRemaining() == 0) { // this is never being run
 			Database.write(o);
 		}
-
 		sendOrderToTrader(id, o, TradeScreen.api.fill);
 	}
 
