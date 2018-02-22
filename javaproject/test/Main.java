@@ -1,13 +1,12 @@
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import LiveMarketData.LiveMarketData;
 import OrderManager.OrderManager;
+import Logger.MyLogger;
 
-public class Main{
+public class Main {
 
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) {
 		System.out.println("TEST: This program tests OrderManager");
 
 		//Create and start 2 sample clients
@@ -30,13 +29,12 @@ public class Main{
 		LiveMarketData liveMarketData = new SampleLiveMarketData();
 		(new MockOM("Order Manager",routers,clients,trader,liveMarketData)).start();
 	}
-
 }
 
-class MockClient extends Thread{
+class MockClient extends Thread {
 	int port;
 
-	MockClient(String name,int port){
+	MockClient(String name,int port) {
 		this.port=port;
 		this.setName(name);
 	}
@@ -60,21 +58,20 @@ class MockClient extends Thread{
 					client.messageHandler();
 				}
 			}
-		}
-		catch(IOException e){
+		} catch(IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 }
 
-class MockOM extends Thread{
+class MockOM extends Thread {
 	InetSocketAddress[] clients;
 	InetSocketAddress[] routers;
 	InetSocketAddress trader;
 	LiveMarketData liveMarketData;
 
-	MockOM(String name,InetSocketAddress[] routers,InetSocketAddress[] clients,InetSocketAddress trader,LiveMarketData liveMarketData){
+	MockOM(String name,InetSocketAddress[] routers,InetSocketAddress[] clients,InetSocketAddress trader,LiveMarketData liveMarketData) {
 		this.clients=clients;
 		this.routers=routers;
 		this.trader=trader;
@@ -83,15 +80,14 @@ class MockOM extends Thread{
 	}
 
 	@Override
-	public void run(){
-		try{
+	public void run() {
+		try {
 			//In order to debug constructors you can do F5 F7 F5
 			new OrderManager(routers,clients,trader,liveMarketData);
-		}catch(IOException | ClassNotFoundException | InterruptedException ex){
+		} catch(IOException | ClassNotFoundException | InterruptedException ex){
 			// Set up logging
-			final Logger logger = Logger.getLogger(Main.class.getName());
-			PropertyConfigurator.configure("resources/log4j.properties");
-			logger.getLogger(MockOM.class.getName()).debug("SEVERE; null",ex);
+			final MyLogger logger = new MyLogger(MockOM.class.getName());
+			logger.logException(ex);
 		}
 	}
 }
