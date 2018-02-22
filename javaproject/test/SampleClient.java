@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Random;
 
+import Logger.MyLogger;
 import OrderClient.Client;
 import OrderClient.NewOrderSingle;
 import OrderManager.Order;
@@ -32,9 +33,9 @@ public class SampleClient extends Mock implements Client{
 	@Override
 	public int sendOrder()throws IOException {
 		int size = RANDOM_NUM_GENERATOR.nextInt(5000);
-		int instid = RANDOM_NUM_GENERATOR.nextInt(3);
-		Instrument instrument = INSTRUMENTS[RANDOM_NUM_GENERATOR.nextInt(INSTRUMENTS.length)];
-		
+		int instid = RANDOM_NUM_GENERATOR.nextInt(INSTRUMENTS.length);
+		Instrument instrument = INSTRUMENTS[instid];
+		// changed from generating a random number to using the random number already generated, thus linking instrument & ID
 		NewOrderSingle nos = new NewOrderSingle(size,instid,instrument);
 
 		show("sendOrder: id="+id+" size="+size+" instrument=" + INSTRUMENTS[instid].toString());

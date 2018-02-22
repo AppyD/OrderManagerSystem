@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import Database.Database;
 import LiveMarketData.LiveMarketData;
+import Logger.MyLogger;
 import OrderClient.NewOrderSingle;
 import OrderRouter.Router;
 import TradeScreen.TradeScreen;
@@ -131,6 +132,7 @@ public class OrderManager {
 
 	private void newOrder(int clientId, int clientOrderId, NewOrderSingle nos) throws IOException {
 		orders.put(id, new Order(clientId, clientOrderId, nos.instrument, nos.size));
+		final MyLogger logger = new MyLogger(OrderManager.class.getName(), id, clientId, clientOrderId, nos.size, nos.instrument, nos.price);
 		//send a message to the client with 39=A; //OrdStatus is Fix 39, 'A' is 'Pending New'
 		ObjectOutputStream os = new ObjectOutputStream(clients[clientId].getOutputStream());
 		//newOrderSingle acknowledgement

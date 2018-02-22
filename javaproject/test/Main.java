@@ -87,8 +87,7 @@ class MockOM extends Thread {
 			new OrderManager(routers,clients,trader,liveMarketData);
 		} catch(IOException | ClassNotFoundException | InterruptedException ex){
 			// Set up logging
-			final MyLogger logger = new MyLogger(MockOM.class.getName());
-			logger.logException(ex);
+			final MyLogger logger = new MyLogger(MockOM.class.getName(), ex);
 		}
 	}
 }

@@ -1,0 +1,12 @@
+22-02-2018 14:20:39 INFO [Client 1] MyLogger - TRADE:  instrument: VOD.L -- quantity: 4110 -- instrument id: 0
+22-02-2018 14:20:39 INFO [Client 2] MyLogger - TRADE:  instrument: VOD.L -- quantity: 1397 -- instrument id: 0
+22-02-2018 14:20:39 INFO [Client 1] MyLogger - TRADE:  instrument: BP.L -- quantity: 2648 -- instrument id: 1
+22-02-2018 14:24:06 INFO [Client 1] MyLogger - TRADE: 0 --  instrument: BP.L -- quantity: 3967 -- instrument id: 1
+22-02-2018 14:24:06 INFO [Client 2] MyLogger - TRADE: 0 --  instrument: BP.L -- quantity: 1774 -- instrument id: 1
+22-02-2018 14:24:06 INFO [Client 1] MyLogger - TRADE: 1 --  instrument: BP.L -- quantity: 3862 -- instrument id: 1
+22-02-2018 14:56:57 INFO [Order Manager] MyLogger - TRADE ID: 0 -- Client ID: 0 -- Client Order ID: 0 -- quantity: 3773 --  instrument: BT.L
+22-02-2018 14:56:57 INFO [Order Manager] MyLogger - TRADE ID: 1 -- Client ID: 1 -- Client Order ID: 0 -- quantity: 1615 --  instrument: VOD.L
+22-02-2018 14:56:57 INFO [Order Manager] MyLogger - TRADE ID: 2 -- Client ID: 0 -- Client Order ID: 1 -- quantity: 1944 --  instrument: VOD.L
+22-02-2018 14:59:26 INFO [Order Manager] MyLogger - TRADE ID: 0 -- Client ID: 0 -- Client Order ID: 0 -- quantity: 3310 --  instrument: BT.L --  price: 2.0
+22-02-2018 14:59:26 INFO [Order Manager] MyLogger - TRADE ID: 1 -- Client ID: 1 -- Client Order ID: 0 -- quantity: 2661 --  instrument: BP.L --  price: 1.0
+22-02-2018 14:59:26 INFO [Order Manager] MyLogger - TRADE ID: 2 -- Client ID: 0 -- Client Order ID: 1 -- quantity: 3857 --  instrument: VOD.L --  price: 0.0
