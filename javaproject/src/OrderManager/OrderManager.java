@@ -78,7 +78,7 @@ public class OrderManager {
 				client = this.clients[clientId];
 
 				if (0 < client.getInputStream().available()) { //if we have part of a message ready to read, assuming this doesn't fragment messages
-					ObjectInputStream is = new ObjectInputStream(client.getInputStream()); //create an object inputstream, this is a pretty stupid way of doing it, why not create it once rather than every time around the loop
+					ObjectInputStream is = new ObjectInputStream(client.getInputStream()); //create an object inputStream, this is a pretty stupid way of doing it, why not create it once rather than every time around the loop
 					String method = (String)is.readObject();
 					System.out.println(Thread.currentThread().getName() + " calling " + method);
 					switch (method) { //determine the type of message and process it
@@ -96,7 +96,7 @@ public class OrderManager {
 				router = this.orderRouters[routerId];
 
 				if (0 < router.getInputStream().available()) { //if we have part of a message ready to read, assuming this doesn't fragment messages
-					ObjectInputStream is = new ObjectInputStream(router.getInputStream()); //create an object inputstream, this is a pretty stupid way of doing it, why not create it once rather than every time around the loop
+					ObjectInputStream is = new ObjectInputStream(router.getInputStream()); //create an object inputStream, this is a pretty stupid way of doing it, why not create it once rather than every time around the loop
 					String method = (String)is.readObject();
 					System.out.println(Thread.currentThread().getName() + " calling " + method);
 

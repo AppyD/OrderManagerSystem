@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import Ref.Instrument;
 
 public class Order implements Serializable {
-	public long transactionID;
+	public long transactionID; // I think this might basically be a sliceID, to uniquely identify each part when an order is sliced up?
 	public int clientOrderID;
     long clientID;
 //	short orderRouter;
