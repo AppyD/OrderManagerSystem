@@ -48,17 +48,19 @@ public class OrderManager {
 		//for the router connections, copy the input array into our object field.
 		//but rather than taking the address we create a socket+ephemeral port and connect it to the address
 		this.orderRouters = new Socket[orderRouters.length];
+		int i = 0; //need a counter for the the output array
 		this.clients = new Socket[clients.length];
 		int clientId, routerId;
 		Socket client, router;
 
-		int i = 0; //need a counter for the the output array
 		for (InetSocketAddress location : orderRouters) {
 			this.orderRouters[i] = connect(location);
 			i++;
 		}
+
 		//repeat for the client connections
 		i = 0;
+
 		for (InetSocketAddress location : clients) {
 			this.clients[i]=connect(location);
 			i++;
@@ -73,7 +75,6 @@ public class OrderManager {
 				client = this.clients[clientId];
 
 				if (0 < client.getInputStream().available()) { //if we have part of a message ready to read, assuming this doesn't fragment messages
-					System.out.println(client.getInputStream().available());
 					ObjectInputStream is = new ObjectInputStream(client.getInputStream()); //create an object inputstream, this is a pretty stupid way of doing it, why not create it once rather than every time around the loop
 					String method = (String)is.readObject();
 					System.out.println(Thread.currentThread().getName() + " calling " + method);

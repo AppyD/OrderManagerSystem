@@ -1,8 +1,8 @@
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.apache.log4j.Logger;
 import LiveMarketData.LiveMarketData;
 import OrderManager.OrderManager;
 
@@ -10,7 +10,7 @@ public class Main{
 
 	public static void main(String[] args) throws IOException{
 		// Set up logging for benchmarking purposes
-		final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Main.class.getName());
+		final Logger logger = Logger.getLogger(Main.class.getName());
 		PropertyConfigurator.configure("resources/log4j.properties");
 		logger.debug("This is a test message.");
 
@@ -70,8 +70,14 @@ class MockClient extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			}
+		} catch(IOException e){
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
+
 
 class MockOM extends Thread{
 	InetSocketAddress[] clients;
@@ -93,7 +99,9 @@ class MockOM extends Thread{
 			//In order to debug constructors you can do F5 F7 F5
 			new OrderManager(routers,clients,trader,liveMarketData);
 		}catch(IOException | ClassNotFoundException | InterruptedException ex){
-			java.util.logging.Logger.getLogger(MockOM.class.getName()).log(Level.SEVERE,null,ex);
+			//Logger.getLogger(MockOM.class.getName()).log(Level.SEVERE,null,ex);
+			//logger.debug();
+			System.out.println("Is it ever entering this part of the code?");
 		}
 	}
 }
