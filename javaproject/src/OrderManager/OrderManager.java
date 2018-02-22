@@ -16,10 +16,10 @@ import TradeScreen.TradeScreen;
 public class OrderManager {
 
 	private static LiveMarketData liveMarketData;
-	private Map<Integer,Order> orders = new HashMap<>(); //debugger will do this line as it gives state to the object
-	//currently recording the number of new order messages we get. TODO why? use it for more?
-	private int id = 0; //debugger will do this line as it gives state to the object
-	private Socket[] orderRouters; //debugger will skip these lines as they disappear at compile time into 'the object'/stack
+	private Map<Integer,Order> orders = new HashMap<>(); // debugger will do this line as it gives state to the object
+														 // currently recording the number of new order messages we get. TODO why? use it for more?
+	private int id = 0; 								 // debugger will do this line as it gives state to the object
+	private Socket[] orderRouters;						 // debugger will skip these lines as they disappear at compile time into 'the object'/stack
 	private Socket[] clients;
 	private Socket trader;
 
@@ -42,7 +42,10 @@ public class OrderManager {
 	}
 
 	//@param args the command line arguments
-	public OrderManager(InetSocketAddress[] orderRouters, InetSocketAddress[] clients, InetSocketAddress trader, LiveMarketData liveMarketData) throws IOException, ClassNotFoundException, InterruptedException {
+	public OrderManager(InetSocketAddress[] orderRouters,
+						InetSocketAddress[] clients,
+						InetSocketAddress trader,
+						LiveMarketData liveMarketData) throws IOException, ClassNotFoundException, InterruptedException {
 		this.liveMarketData = liveMarketData;
 		this.trader = connect(trader);
 		//for the router connections, copy the input array into our object field.
@@ -129,13 +132,12 @@ public class OrderManager {
 		}
 	}
 
-	private void newOrder(int clientId, int clientOrderId, NewOrderSingle nos) throws IOException {
-		orders.put(id, new Order(clientId, clientOrderId, nos.instrument, nos.size));
+	private void newOrder(int clientID, int clientOrderID, NewOrderSingle nos) throws IOException {
+		orders.put(id, new Order(clientID, clientOrderID, nos.instrument, nos.size));
 		//send a message to the client with 39=A; //OrdStatus is Fix 39, 'A' is 'Pending New'
-		ObjectOutputStream os = new ObjectOutputStream(clients[clientId].getOutputStream());
-		//newOrderSingle acknowledgement
-		//ClOrdId is 11=
-		os.writeObject("11="+clientOrderId+"; 35=A; 39=A;");
+		ObjectOutputStream os = new ObjectOutputStream(clients[clientID].getOutputStream());
+		//newOrderSingle acknowledgement;  //clientOrderID =11 (Fix 11?)
+		os.writeObject("11="+clientOrderID+"; 35=A; 39=A;");
 		os.flush();
 		sendOrderToTrader(id,orders.get(id),TradeScreen.api.newOrder);
 		//send the new order to the trading screen
@@ -257,7 +259,7 @@ public class OrderManager {
 	}
 
 	private void price(int id, Order o) throws IOException {
-		liveMarketData.setPrice(o);
+		liveMarketData.setPrice(o); // doesn't do anything right now, as interface is not yet implemented
 		sendOrderToTrader(id, o, TradeScreen.api.price);
 	}
 }

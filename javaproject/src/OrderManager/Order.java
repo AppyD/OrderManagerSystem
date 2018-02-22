@@ -21,12 +21,12 @@ public class Order implements Serializable {
 
     // The constructor for a new order.
     public Order(long clientId, int ClientOrderID, Instrument instrument, int size) {
-        this.clientOrderID = ClientOrderID;
-        this.size = size;
         this.clientID = clientId;
+        this.clientOrderID = ClientOrderID;
         this.instrument = instrument;
-        fills = new ArrayList<>();
+        this.size = size;
         slices = new ArrayList<>();
+        fills = new ArrayList<>();
     }
 
     // Calculates the total size of the orders in the 'slices' ArrayList.
@@ -82,21 +82,18 @@ public class Order implements Serializable {
 		for(Order slice : slices){
 			if(slice.sizeRemaining() == 0)
 				continue;
+
 			//TODO could optimise this to not start at the beginning every time
 			for (Order matchingSlice : matchingOrder.slices) {
 				int msze = matchingSlice.sizeRemaining();
-
 				if (msze == 0)
 					continue;
-
 				int sze = slice.sizeRemaining();
-
 				if (sze <= msze) {
 					 slice.createFill(sze, initialMarketPrice);
 					 matchingSlice.createFill(sze, initialMarketPrice);
 					 break;
 				}
-
 				//Lastly, the case where (sze > msze)
 				slice.createFill(msze, initialMarketPrice);
 				matchingSlice.createFill(msze, initialMarketPrice);
@@ -130,8 +127,7 @@ public class Order implements Serializable {
 					 matchingSlice.createFill(sze, initialMarketPrice);
 					 break;
 				}
-
-				//sze>msze
+				//if (sze > msze)
 				createFill(msze, initialMarketPrice);
 				matchingSlice.createFill(msze, initialMarketPrice);
 			}
