@@ -49,6 +49,9 @@ public class OrderManager {
 		//but rather than taking the address we create a socket+ephemeral port and connect it to the address
 		this.orderRouters = new Socket[orderRouters.length];
 		int i = 0; //need a counter for the the output array
+		this.clients = new Socket[clients.length];
+		int clientId, routerId;
+		Socket client, router;
 
 		for (InetSocketAddress location : orderRouters) {
 			this.orderRouters[i] = connect(location);
@@ -56,16 +59,12 @@ public class OrderManager {
 		}
 
 		//repeat for the client connections
-		this.clients = new Socket[clients.length];
 		i = 0;
 
 		for (InetSocketAddress location : clients) {
 			this.clients[i]=connect(location);
 			i++;
 		}
-
-		int clientId, routerId;
-		Socket client, router;
 
 		//main loop, wait for a message, then process it
 		while(true){
@@ -84,7 +83,8 @@ public class OrderManager {
 						case "newOrderSingle":
 							newOrder(clientId, is.readInt(), (NewOrderSingle)is.readObject());
 							break;
-						//TODO create a default case which errors with "Unknown message type" + ...
+						default:
+							throw new IllegalArgumentException("ERROR: Message type " + method + "is unknown.");
 					}
 				}
 			}
@@ -201,7 +201,7 @@ public class OrderManager {
 	}
 
 	private void cancelOrder() {
-		// TODO
+		//TODO
 	}
 
 	private void newFill(int id, int sliceId, int size, double price) throws IOException {
@@ -210,7 +210,6 @@ public class OrderManager {
 
 		if(o.sizeRemaining() == 0) { // this is never being run
 			Database.write(o);
-			System.out.println("HERE");
 		}
 		sendOrderToTrader(id, o, TradeScreen.api.fill);
 	}

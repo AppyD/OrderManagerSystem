@@ -41,6 +41,15 @@ public class SampleRouter extends Thread implements Router{
 						case priceAtSize:
 							priceAtSize(is.readInt(),is.readInt(),(Instrument)is.readObject(),is.readInt());
 							break;
+			omConn=ServerSocketFactory.getDefault().createServerSocket(port).accept();
+			while(true){
+				if(0<omConn.getInputStream().available()){
+					is=new ObjectInputStream(omConn.getInputStream());
+					Router.api methodName=(Router.api)is.readObject();
+					System.out.println("Order Router received method call for:"+methodName);
+					switch(methodName){
+						case routeOrder:routeOrder(is.readInt(),is.readInt(),is.readInt(),(Instrument)is.readObject());break;
+						case priceAtSize:priceAtSize(is.readInt(),is.readInt(),(Instrument)is.readObject(),is.readInt());break;
 					}
 				} else {
 					Thread.sleep(100);
