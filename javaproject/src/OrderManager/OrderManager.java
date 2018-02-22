@@ -158,7 +158,7 @@ public class OrderManager {
 			return;
 		}
 		o.OrdStatus = '0'; //New
-		ObjectOutputStream os = new ObjectOutputStream(clients[o.clientID].getOutputStream());
+		ObjectOutputStream os = new ObjectOutputStream(clients[(int) o.clientID].getOutputStream());
 		//newOrderSingle acknowledgement
 		//ClOrdId is 11=
 		os.writeObject("11="+o.clientOrderID +"; 35=A; 39=0");
@@ -244,7 +244,7 @@ public class OrderManager {
 		}
 		ObjectOutputStream os = new ObjectOutputStream(orderRouters[minIndex].getOutputStream());
 		os.writeObject(Router.api.routeOrder);
-		os.writeInt(o.transactionID);
+		os.writeInt((int) o.transactionID);
 		os.writeInt(sliceId);
 		os.writeInt(o.sizeRemaining());
 		os.writeObject(o.instrument);

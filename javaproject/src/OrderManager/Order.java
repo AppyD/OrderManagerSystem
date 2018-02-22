@@ -5,22 +5,22 @@ import java.util.ArrayList;
 import Ref.Instrument;
 
 public class Order implements Serializable {
-	public int transactionID; 						//TODO these should all be longs
+	public long transactionID;
 	public int clientOrderID;
-    int clientID;
+    long clientID;
 //	short orderRouter;
 	private int size;
 	double[] bestPrices;
 	int bestPriceCount;
     public Instrument instrument;
     public double initialMarketPrice;
-    ArrayList<Order> slices;
+	ArrayList<Order> slices;
     private ArrayList<Fill> fills;
     char OrdStatus = 'A';                 //OrdStatus is Fix 39, 'A' is 'Pending New'
     //Status state;
 
     // The constructor for a new order.
-    public Order(int clientId, int ClientOrderID, Instrument instrument, int size) {
+    public Order(long clientId, int ClientOrderID, Instrument instrument, int size) {
         this.clientOrderID = ClientOrderID;
         this.size = size;
         this.clientID = clientId;
