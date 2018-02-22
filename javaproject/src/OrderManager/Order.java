@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import Ref.Instrument;
 
-public class Order implements Serializable{
+public class Order implements Serializable {
 	public int transactionID; 						//TODO these should all be longs
 	public int clientOrderID;
     int clientID;
@@ -20,7 +20,7 @@ public class Order implements Serializable{
     //Status state;
 
     // The constructor for a new order.
-    public Order(int clientId, int ClientOrderID, Instrument instrument, int size){
+    public Order(int clientId, int ClientOrderID, Instrument instrument, int size) {
         this.clientOrderID = ClientOrderID;
         this.size = size;
         this.clientID = clientId;
@@ -59,7 +59,7 @@ public class Order implements Serializable{
 	}
 
 	//
-	float price(){
+	float price() {
 		//TODO this is buggy as it doesn't take account of slices. Let them fix it
 		float sum = 0;
 		for(Fill fill : fills)
@@ -77,7 +77,7 @@ public class Order implements Serializable{
 	}
 
 	//
-	void cross(Order matchingOrder){
+	void cross(Order matchingOrder) {
 		//pair slices first and then parent
 		for(Order slice : slices){
 			if(slice.sizeRemaining() == 0)
@@ -157,7 +157,7 @@ public class Order implements Serializable{
 	}
 }
 
-class Basket{
+class Basket {
 	Order[] orders;
 }
 
