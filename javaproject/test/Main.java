@@ -48,7 +48,7 @@ class MockClient extends Thread {
 				//TODO client.sendCancel(id);
 				client.messageHandler();
 			} else {
-				if (port == 2000) { // differentiates between clients
+				if (port == 2004) { // differentiates between clients
 					client.sendOrder(); // creates and sends an order
 					int id = client.sendOrder();
 					//TODO client.sendCancel(id);
@@ -86,8 +86,14 @@ class MockOM extends Thread {
 			new OrderManager(routers,clients,trader,liveMarketData);
 		} catch(IOException | ClassNotFoundException | InterruptedException ex){
 			// Set up logging
+<<<<<<< HEAD
 			final MyLogger logger = new MyLogger(MockOM.class.getName());
 			logger.logException(ex);
+=======
+			final Logger logger = Logger.getLogger(Main.class.getName());
+			PropertyConfigurator.configure("resources/log4j.properties");
+			logger.debug("SEVERE; null",ex);
+>>>>>>> 5b181406ba7f2722c14a605c2c3b599197c339ea
 		}
 	}
 }
