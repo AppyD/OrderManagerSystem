@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import LiveMarketData.LiveMarketData;
 import OrderManager.OrderManager;
@@ -9,11 +8,6 @@ import OrderManager.OrderManager;
 public class Main{
 
 	public static void main(String[] args) throws IOException{
-		// Set up logging for benchmarking purposes
-		final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Main.class.getName());
-		PropertyConfigurator.configure("resources/log4j.properties");
-		logger.debug("This is a test message.");
-
 		System.out.println("TEST: This program tests OrderManager");
 
 		//Create and start 2 sample clients
@@ -47,30 +41,31 @@ class MockClient extends Thread{
 		this.setName(name);
 	}
 
-	public void run(){
+	public void run() {
 		try {
 			SampleClient client = new SampleClient(port);
-			if(port == 2000){
+			if (port == 2000) {
 				client.sendOrder();
-				int id = client.sendOrder();
-				//TODO client.sendCancel(id);
-				client.messageHandler();
-			}else{
-			if(port == 2000){ // differentiates between clients
-				client.sendOrder(); // creates and sends an order
 				int id = client.sendOrder();
 				//TODO client.sendCancel(id);
 				client.messageHandler();
 			} else {
-				client.sendOrder();
-				client.messageHandler();
+				if (port == 2000) { // differentiates between clients
+					client.sendOrder(); // creates and sends an order
+					int id = client.sendOrder();
+					//TODO client.sendCancel(id);
+					client.messageHandler();
+				} else {
+					client.sendOrder();
+					client.messageHandler();
+				}
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		
-	}
+		catch(IOException e){
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 }
 
 class MockOM extends Thread{
@@ -93,7 +88,10 @@ class MockOM extends Thread{
 			//In order to debug constructors you can do F5 F7 F5
 			new OrderManager(routers,clients,trader,liveMarketData);
 		}catch(IOException | ClassNotFoundException | InterruptedException ex){
-			java.util.logging.Logger.getLogger(MockOM.class.getName()).log(Level.SEVERE,null,ex);
+			// Set up logging
+			final Logger logger = Logger.getLogger(Main.class.getName());
+			PropertyConfigurator.configure("resources/log4j.properties");
+			logger.getLogger(MockOM.class.getName()).debug("SEVERE; null",ex);
 		}
 	}
 }

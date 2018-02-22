@@ -1,30 +1,8 @@
-21-02-2018 11:26:48 DEBUG [main] Main - This is a test message.
-21-02-2018 11:41:04 DEBUG [main] Main - This is a test message.
-21-02-2018 14:13:39 DEBUG [main] Main - This is a test message.
-21-02-2018 14:24:23 DEBUG [main] Main - This is a test message.
-21-02-2018 14:53:41 DEBUG [main] Main - This is a test message.
-21-02-2018 14:54:45 DEBUG [main] Main - This is a test message.
-21-02-2018 15:01:31 DEBUG [main] Main - This is a test message.
-21-02-2018 15:13:32 DEBUG [main] Main - This is a test message.
-21-02-2018 15:16:26 DEBUG [main] Main - This is a test message.
-21-02-2018 15:17:47 DEBUG [main] Main - This is a test message.
-21-02-2018 15:18:58 DEBUG [main] Main - This is a test message.
-21-02-2018 15:19:42 DEBUG [main] Main - This is a test message.
-21-02-2018 15:20:35 DEBUG [main] Main - This is a test message.
-21-02-2018 15:21:28 DEBUG [main] Main - This is a test message.
-21-02-2018 15:23:19 DEBUG [main] Main - This is a test message.
-21-02-2018 16:02:27 DEBUG [main] Main - This is a test message.
-21-02-2018 16:30:46 DEBUG [main] Main - This is a test message.
-21-02-2018 16:54:26 DEBUG [main] Main - This is a test message.
-21-02-2018 16:55:46 DEBUG [main] Main - This is a test message.
-21-02-2018 14:56:10 DEBUG [main] Main - This is a test message.
-21-02-2018 14:59:12 DEBUG [main] Main - This is a test message.
-21-02-2018 15:22:55 DEBUG [main] Main - This is a test message.
-21-02-2018 16:10:27 DEBUG [main] Main - This is a test message.
-21-02-2018 16:25:43 DEBUG [main] Main - This is a test message.
-21-02-2018 16:25:57 DEBUG [main] Main - This is a test message.
-21-02-2018 16:26:10 DEBUG [main] Main - This is a test message.
-21-02-2018 16:47:12 DEBUG [main] Main - This is a test message.
-21-02-2018 16:58:58 DEBUG [main] Main - This is a test message.
-21-02-2018 16:59:40 DEBUG [main] Main - This is a test message.
-22-02-2018 08:50:04 DEBUG [main] Main - This is a test message.
+22-02-2018 09:35:24 DEBUG [main] Main - This is a test message.
+22-02-2018 09:54:53 DEBUG [Order Manager] MockOM - SEVERE; null
+22-02-2018 09:55:54 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:117)
+	at MockOM.run(Main.java:89)
