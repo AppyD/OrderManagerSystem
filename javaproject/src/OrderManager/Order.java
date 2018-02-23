@@ -5,10 +5,9 @@ import java.util.ArrayList;
 import Ref.Instrument;
 
 public class Order implements Serializable {
-	public int transactionID; 						//TODO these should all be longs
 	public long transactionID; // I think this might basically be a sliceID, to uniquely identify each part when an order is sliced up?
 	public int clientOrderID;
-    int clientID;
+    long clientID;
 //	short orderRouter;
 	private int size;
 	double price;           // For recording the price the client wishes to pay/receive for this order. TODO: Harry says implement this.
@@ -16,16 +15,12 @@ public class Order implements Serializable {
 	double[] bestPrices;
 	int bestPriceCount;
     public double initialMarketPrice;
-    ArrayList<Order> slices;
 	public ArrayList<Order> slices;
     private ArrayList<Fill> fills;
     char OrdStatus = 'A';                 //OrdStatus is Fix 39, 'A' is 'Pending New'
     // Status state
 
     // The constructor for a new order.
-    public Order(int clientId, int ClientOrderID, Instrument instrument, int size) {
-        this.clientOrderID = ClientOrderID;
-        this.size = size;
     public Order(long clientId, int ClientOrderID, Instrument instrument, int size) {
         this.clientID = clientId;
         this.clientOrderID = ClientOrderID;
@@ -170,6 +165,7 @@ class Fill implements Serializable {
 	double price;
 
 	Fill(long transactionID, int size, double price) {
+		this.transactionID = transactionID;
 		this.size = size;
 		this.price = price;
 	}
