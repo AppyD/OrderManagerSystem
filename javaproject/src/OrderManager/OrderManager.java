@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Map;
 import Database.Database;
@@ -165,7 +166,6 @@ public class OrderManager {
 		//ClOrdId is 11=
 		os.writeObject("11="+o.clientOrderID +"; 35=A; 39=0");
 		os.flush();
-
 		price(id, o);
 	}
 
@@ -260,4 +260,5 @@ public class OrderManager {
 		liveMarketData.setPrice(o);
 		sendOrderToTrader(id, o, TradeScreen.api.price);
 	}
+
 }

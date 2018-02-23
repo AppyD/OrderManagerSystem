@@ -43,7 +43,6 @@ public class SampleClient extends Mock implements Client{
 		if(omConn.isConnected()){
 			ObjectOutputStream os = new ObjectOutputStream(omConn.getOutputStream());
 			os.writeObject("newOrderSingle");
-			//os.writeObject("35=D;");
 			os.writeInt(id);
 			os.writeObject(nos);
 			os.flush();

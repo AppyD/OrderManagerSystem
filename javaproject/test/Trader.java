@@ -27,7 +27,7 @@ public class Trader extends Thread implements TradeScreen {
 		//OM will connect to us
 		try {
 			omConn = ServerSocketFactory.getDefault().createServerSocket(port).accept();
-			
+
 			//is = new ObjectInputStream(omConn.getInputStream());
 			InputStream s = omConn.getInputStream(); //if i try to create an objectInputStream before we have data it will block
 			while(true) {
@@ -55,9 +55,11 @@ public class Trader extends Thread implements TradeScreen {
 					Thread.sleep(1000);
 				}
 			}
-		} catch (IOException | ClassNotFoundException | InterruptedException e) {
+		} catch (ClassNotFoundException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IOException e){
+			System.out.println("Stream closed");
 		}
 	}
 
@@ -97,6 +99,7 @@ public class Trader extends Thread implements TradeScreen {
 	// right now it is just set to flush the output stream so that the exception in Main is raised.
 	public void fill(int id, Order o) throws IOException {
 		os = new ObjectOutputStream(omConn.getOutputStream());
+		
 		os.writeInt(id);
 		os.flush();
 	}
