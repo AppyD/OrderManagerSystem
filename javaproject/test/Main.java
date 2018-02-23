@@ -8,7 +8,6 @@ import org.apache.log4j.PropertyConfigurator;
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("TEST: This program tests OrderManager");
 
 		//Create and start 2 sample clients
 		MockClient c1 = new MockClient("Client 1",2000);
@@ -43,21 +42,14 @@ class MockClient extends Thread {
 	public void run() {
 		try {
 			SampleClient client = new SampleClient(port);
-			if (port == 2000) {
+			if (port == 2000) { // differentiates between clients
 				client.sendOrder();
 				int id = client.sendOrder();
 				//TODO client.sendCancel(id);
 				client.messageHandler();
 			} else {
-				if (port == 2004) { // differentiates between clients
-					client.sendOrder(); // creates and sends an order
-					int id = client.sendOrder();
-					//TODO client.sendCancel(id);
-					client.messageHandler();
-				} else {
-					client.sendOrder();
-					client.messageHandler();
-				}
+				client.sendOrder();
+				client.messageHandler();
 			}
 		} catch(IOException e) {
 				// TODO Auto-generated catch block
