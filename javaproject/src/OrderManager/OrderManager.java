@@ -162,8 +162,7 @@ public class OrderManager {
 		}
 		o.OrdStatus = '0'; //New
 		ObjectOutputStream os = new ObjectOutputStream(clients[(int) o.clientID].getOutputStream());
-		//newOrderSingle acknowledgement
-		//ClOrdId is 11=
+		//newOrderSingle acknowledgement;    //ClientOrderID =11
 		os.writeObject("11=" + o.clientOrderID + "; 35=A; 39=0");
 		os.flush();
 

@@ -10,7 +10,8 @@ public class Order implements Serializable {
     long clientID;
 //	short orderRouter;
 	private int size;
-	double price;           // For recording the price the client wishes to pay/receive for this order. TODO: Harry says implement this.
+//	double price;           // For recording the price the client wishes to pay/receive for this order. TODO: Harry says implement this.
+//	public int side;		// 1=Buy, 2=Sell
     public Instrument instrument;
 	double[] bestPrices;
 	int bestPriceCount;
@@ -55,11 +56,11 @@ public class Order implements Serializable {
 	}
 
 	// Returns the total size remaining for the order to be completed.
-	public int sizeRemaining(){
-		return size-sizeFilled();
+	public int sizeRemaining() {
+		return size - sizeFilled();
 	}
 
-	//
+	// Not really sure what this is meant to do.
 	float price() {
 		//TODO this is buggy as it doesn't take account of slices. Let them fix it
 		float sum = 0;
@@ -68,7 +69,7 @@ public class Order implements Serializable {
 		return sum/fills.size();
 	}
 
-	//
+	// Adds a new fill to the 'fills' ArrayList, and updated the OrdStatus of the current order.
 	void createFill(long transactionID, int size, double price) {
 		fills.add(new Fill(transactionID, size, price));
 		if (sizeRemaining() == 0)
@@ -77,7 +78,7 @@ public class Order implements Serializable {
 			OrdStatus = '1';
 	}
 
-	//
+	// This matches an order with this one, to try to complete as many trades as possible (using the slices ArrayList).
 	void cross(Order matchingOrder) {
 		//pair slices first and then parent
 		for (Order slice : slices) {
@@ -149,14 +150,19 @@ public class Order implements Serializable {
 		}
 	}
 
-	//
+	// Cancels a trade?
 	void cancel() {
 		//state = cancelled
 	}
 }
 
-class Basket {
+class Basket implements Serializable {
+
 	Order[] orders;
+
+	public Basket(Order[] orders) {
+		this.orders = orders;
+	}
 }
 
 class Fill implements Serializable {
