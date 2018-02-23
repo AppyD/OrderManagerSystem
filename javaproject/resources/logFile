@@ -43,3 +43,15 @@ java.io.OptionalDataException
 	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
 	at OrderManager.OrderManager.<init>(OrderManager.java:119)
 	at MockOM.run(Main.java:89)
+22-02-2018 22:42:45 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1579)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:427)
+	at OrderManager.OrderManager.<init>(OrderManager.java:122)
+	at MockOM.run(Main.java:89)
+23-02-2018 00:26:12 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1579)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:427)
+	at OrderManager.OrderManager.<init>(OrderManager.java:123)
+	at MockOM.run(Main.java:89)
