@@ -10,6 +10,7 @@ public class Order implements Serializable {
     long clientID;
 //	short orderRouter;
 	private int size;
+	double price;           // For recording the price the client wishes to pay/receive for this order. TODO: Harry says implement this.
     public Instrument instrument;
 	double[] bestPrices;
 	int bestPriceCount;
@@ -27,7 +28,7 @@ public class Order implements Serializable {
         this.size = size;
         slices = new ArrayList<>();
         fills = new ArrayList<>();
-    }
+    } //TODO: Harry says add price to constructor.
 
     // Calculates the total size of the orders in the 'slices' ArrayList.
 	public int totalSizeOfSlices() {
