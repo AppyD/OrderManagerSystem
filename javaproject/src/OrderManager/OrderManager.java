@@ -86,6 +86,7 @@ public class OrderManager {
 						//call the newOrder message with the clientId and the message (clientMessageId,NewOrderSingle)
 						case "newOrderSingle":
 							newOrder(clientId, is.readInt(), (NewOrderSingle)is.readObject());
+							printOrders(); // TODO: remove this after testing
 							break;
 						default:
 							throw new IllegalArgumentException("ERROR: Message type " + method + "is unknown.");
@@ -261,5 +262,9 @@ public class OrderManager {
 	private void price(int id, Order o) throws IOException {
 		liveMarketData.setPrice(o); // doesn't do anything right now, as interface is not yet implemented
 		sendOrderToTrader(id, o, TradeScreen.api.price);
+	}
+
+	private void printOrders() {
+		System.out.println("Orders so far: " + orders.entrySet());
 	}
 }

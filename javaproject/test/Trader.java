@@ -90,7 +90,12 @@ public class Trader extends Thread implements TradeScreen {
 	public void price(int id, Order o) throws InterruptedException, IOException {
 		//TODO should update the trade screen
 		Thread.sleep(2134);
-		sliceOrder(id,orders.get(id).sizeRemaining()/2);
+//		sliceOrder(id,orders.get(id).sizeRemaining()/2);
+		int maxSliceSize = 100;
+		if (orders.get(id).sizeRemaining() < maxSliceSize)
+			sliceOrder(id, orders.get(id).sizeRemaining());
+		else
+			sliceOrder(id, maxSliceSize);
 	}
 
 	// method made by Appy --> needs to be edited to make sense!
