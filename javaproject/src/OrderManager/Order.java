@@ -2,6 +2,8 @@ package OrderManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import Logger.MyLogger;
 import Ref.Instrument;
 
 public class Order implements Serializable{
@@ -29,7 +31,8 @@ public class Order implements Serializable{
 	}
 
 	public int newSlice(int sliceSize) {
-		slices.add(new Order(id, clientOrderID, instrument, sliceSize));
+		slices.add(new Order(clientID, clientOrderID, instrument, sliceSize)); // changed ID to clientID
+		final MyLogger logger = new MyLogger(Order.class.getName(), clientID, clientOrderID, sliceSize, instrument);
 		return slices.size()-1;
 	}
 
@@ -66,7 +69,6 @@ public class Order implements Serializable{
 
 	void createFill(int size, double price) {
 		fills.add(new Fill(size, price));
-
 		if (sizeRemaining() == 0) {
 			OrdStatus = '2';
 		} else {

@@ -209,7 +209,7 @@ public class OrderManager {
 	private void newFill(int id, int sliceId, int size, double price) throws IOException {
 		Order o = orders.get(id);
 		o.slices.get(sliceId).createFill(size, price);
-
+		final MyLogger logger = new MyLogger(OrderManager.class.getName(),o.clientID, o.clientOrderID, id, sliceId, size, price);
 		if(o.sizeRemaining() == 0) { // this is never being run
 			Database.write(o);
 		}
@@ -217,7 +217,6 @@ public class OrderManager {
 	}
 
 	private void routeOrder(int id, int sliceId, int size, Order order) throws IOException {
-
 		for(Socket r : orderRouters){
 			ObjectOutputStream os = new ObjectOutputStream(r.getOutputStream());
 			os.writeObject(Router.api.priceAtSize);
@@ -234,7 +233,6 @@ public class OrderManager {
 	}
 
 	private void reallyRouteOrder(int sliceId, Order o) throws IOException {
-
 		//TODO this assumes we are buying rather than selling
 		int minIndex = 0;
 		double min = o.bestPrices[0];
