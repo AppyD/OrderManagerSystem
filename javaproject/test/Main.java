@@ -8,7 +8,6 @@ import OrderManager.OrderManager;
 public class Main{
 
 	public static void main(String[] args) throws IOException{
-		System.out.println("TEST: This program tests OrderManager");
 
 		//Create and start 2 sample clients
 		MockClient c1 = new MockClient("Client 1",2000);

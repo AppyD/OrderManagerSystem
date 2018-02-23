@@ -44,8 +44,8 @@ public class Order implements Serializable {
 	public int newSlice(int sliceSize) {
 		slices.add(new Order(transactionID, clientOrderID, instrument, sliceSize));
 		slices.add(new Order(clientID, clientOrderID, instrument, sliceSize)); // changed ID to clientID
-		final MyLogger logger = new MyLogger(Order.class.getName(), clientID, clientOrderID, sliceSize, instrument);
-		return slices.size()-1;
+		final MyLogger logger = new MyLogger(Order.class.getName(), (int) clientID, clientOrderID, sliceSize, instrument);
+		return slices.size() - 1;
 	}
 
 	// Returns the total size of orders within both 'fills' and 'slices' ArrayLists.

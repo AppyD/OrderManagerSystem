@@ -89,7 +89,7 @@ public class Trader extends Thread implements TradeScreen {
 	@Override
 	public void price(int id, Order o) throws InterruptedException, IOException {
 		//TODO should update the trade screen
-		Thread.sleep(2134);
+//		Thread.sleep(2134);
 //		sliceOrder(id,orders.get(id).sizeRemaining()/2);
 		int maxSliceSize = 100;
 		if (orders.get(id).sizeRemaining() < maxSliceSize)
