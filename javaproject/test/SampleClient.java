@@ -35,6 +35,10 @@ public class SampleClient extends Mock implements Client{
 		int instid = RANDOM_NUM_GENERATOR.nextInt(3);
 		Instrument instrument = INSTRUMENTS[RANDOM_NUM_GENERATOR.nextInt(INSTRUMENTS.length)];
 		NewOrderSingle nos = new NewOrderSingle(size,instid,instrument);
+		int instid = RANDOM_NUM_GENERATOR.nextInt(INSTRUMENTS.length);
+		Instrument instrument = INSTRUMENTS[instid];
+		// changed from generating a random number to using the random number already generated, thus linking instrument & ID
+		NewOrderSingle nos = new NewOrderSingle(size,instid,instrument); // price is 2nd parameter
 
 		show("sendOrder: transactionID="+id+" size="+size+" instrument=" + INSTRUMENTS[instid].toString());
 		OUT_QUEUE.put(id,nos);

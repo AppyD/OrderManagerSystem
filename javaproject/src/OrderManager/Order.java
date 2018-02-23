@@ -2,6 +2,7 @@ package OrderManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import Logger.MyLogger;
 import Ref.Instrument;
 
 public class Order implements Serializable {
@@ -42,6 +43,8 @@ public class Order implements Serializable {
 	// Adds a new order to the 'slices' ArrayList, and returns the index of this new order within the List.
 	public int newSlice(int sliceSize) {
 		slices.add(new Order(transactionID, clientOrderID, instrument, sliceSize));
+		slices.add(new Order(clientID, clientOrderID, instrument, sliceSize)); // changed ID to clientID
+		final MyLogger logger = new MyLogger(Order.class.getName(), clientID, clientOrderID, sliceSize, instrument);
 		return slices.size()-1;
 	}
 

@@ -1,0 +1,90 @@
+22-02-2018 12:26:58 DEBUG [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:119)
+	at MockOM.run(Main.java:86)
+22-02-2018 13:54:15 DEBUG [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:119)
+	at MockOM.run(Main.java:87)
+22-02-2018 14:11:44 DEBUG [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:119)
+	at MockOM.run(Main.java:87)
+22-02-2018 14:15:33 DEBUG [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:119)
+	at MockOM.run(Main.java:87)
+22-02-2018 14:20:53 DEBUG [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:119)
+	at MockOM.run(Main.java:87)
+22-02-2018 14:24:20 DEBUG [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:119)
+	at MockOM.run(Main.java:87)
+22-02-2018 14:57:11 DEBUG [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:120)
+	at MockOM.run(Main.java:87)
+22-02-2018 14:59:40 DEBUG [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:120)
+	at MockOM.run(Main.java:87)
+22-02-2018 16:59:21 ERROR [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:120)
+	at MockOM.run(Main.java:87)
+23-02-2018 09:05:33 ERROR [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:120)
+	at MockOM.run(Main.java:87)
+23-02-2018 09:12:29 ERROR [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:120)
+	at MockOM.run(Main.java:87)
+23-02-2018 09:26:43 ERROR [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:120)
+	at MockOM.run(Main.java:87)
+23-02-2018 09:50:59 ERROR [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:120)
+	at MockOM.run(Main.java:87)
+23-02-2018 10:11:34 ERROR [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:120)
+	at MockOM.run(Main.java:87)
+23-02-2018 10:48:22 ERROR [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:120)
+	at MockOM.run(Main.java:87)
