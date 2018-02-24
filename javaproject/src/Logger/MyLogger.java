@@ -8,6 +8,9 @@ public class MyLogger {
 
     private Logger logger;
 
+    public MyLogger(String className, String string) {
+        logInfo(className, string);
+    }
     public MyLogger(String className, Exception ex) {
         logException(className, ex);
     }
@@ -21,7 +24,13 @@ public class MyLogger {
         logFill(className, clientID, clientOrderID, fillID, sliceID, size, price);
     }
 
-    public void logException(String className, Exception ex) {
+    private void logInfo(String className, String string){
+        logger = org.apache.log4j.Logger.getLogger(className);
+        PropertyConfigurator.configure("resources/log4jv2.properties");
+        logger.info(string);
+    }
+
+    private void logException(String className, Exception ex) {
         logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4j.properties");
         logger.error("ISSUE", ex);

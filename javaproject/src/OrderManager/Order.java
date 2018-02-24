@@ -30,7 +30,17 @@ public class Order implements Serializable {
         this.size = size;
         slices = new ArrayList<>();
         fills = new ArrayList<>();
-    } //TODO: Harry says add price to constructor.
+    }
+
+	public Order(long clientId, int ClientOrderID, Instrument instrument, int size, double initialMarketPrice) {
+		this.clientID = clientId;
+		this.clientOrderID = ClientOrderID;
+		this.instrument = instrument;
+		this.size = size;
+		this.initialMarketPrice = initialMarketPrice;
+		slices = new ArrayList<>();
+		fills = new ArrayList<>();
+	}
 
     // Calculates the total size of the orders in the 'slices' ArrayList.
 	public int totalSizeOfSlices() {

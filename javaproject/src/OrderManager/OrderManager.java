@@ -25,6 +25,7 @@ public class OrderManager {
 	private Socket[] orderRouters;						 // debugger will skip these lines as they disappear at compile time into 'the object'/stack
 	private Socket[] clients;
 	private Socket trader;
+	private MyLogger logger;
 
 	private Socket connect(InetSocketAddress location) throws InterruptedException {
 		boolean connected=false;
@@ -49,6 +50,7 @@ public class OrderManager {
 						InetSocketAddress[] clients,
 						InetSocketAddress trader,
 						LiveMarketData liveMarketData) throws IOException, ClassNotFoundException, InterruptedException {
+		logger = new MyLogger(OrderManager.class.getName(), "Starting systems..."); // Signifies the start of the log for each run.
 		this.liveMarketData = liveMarketData;
 		this.trader = connect(trader);
 		//for the router connections, copy the input array into our object field.
@@ -133,8 +135,8 @@ public class OrderManager {
 	}
 
 	private void newOrder(int clientID, int clientOrderID, NewOrderSingle nos) throws IOException {
-		orders.put(id, new Order(clientID, clientOrderID, nos.instrument, nos.size));
-		final MyLogger logger = new MyLogger(OrderManager.class.getName(), id, clientID, clientOrderID, nos.size, nos.instrument, nos.price);
+		orders.put(id, new Order(clientID, clientOrderID, nos.instrument, nos.size, nos.price));
+		logger = new MyLogger(OrderManager.class.getName(), id, clientID, clientOrderID, nos.size, nos.instrument, nos.price);
 		//send a message to the client with 39=A; //OrdStatus is Fix 39, 'A' is 'Pending New'
 		ObjectOutputStream os = new ObjectOutputStream(clients[clientID].getOutputStream());
 		//newOrderSingle acknowledgement;  //clientOrderID =11 (Fix 11?)
@@ -162,8 +164,8 @@ public class OrderManager {
 		}
 		o.OrdStatus = '0'; //New
 		ObjectOutputStream os = new ObjectOutputStream(clients[(int) o.clientID].getOutputStream());
-		//newOrderSingle acknowledgement;    //ClientOrderID =11
-		os.writeObject("11=" + o.clientOrderID + "; 35=A; 39=0");
+		System.out.println("New order accepted: clientOrderID=" + id);  //newOrderSingle acknowledgement;
+		os.writeObject("11=" + o.clientOrderID + "; 35=A; 39=0");  //ClientOrderID =11
 		os.flush();
 
 		price(id, o);
@@ -209,14 +211,11 @@ public class OrderManager {
 	private void newFill(int id, int sliceId, int size, double price) throws IOException {
 		Order o = orders.get(id);
 		Instrument instrument = o.instrument;
-		double salePrice;
-		if (price < )
-			salePrice = price;
-		else
-			salePrice = SampleClient.instruments.get(instrument);
-
-		o.slices.get(sliceId).createFill(sliceId, size, price);
-		final MyLogger logger = new MyLogger(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, size, price);
+		double salePrice = o.initialMarketPrice;
+		if (price < salePrice)   // TODO: Check if this is correct - it is right for a buyer, as they would want to pay <= a maximum price (ie initialMarketPrice).
+			salePrice = price;   // Otherwise, use salePrice for the newFill, ie someone completed the fill at the asking price.
+		o.slices.get(sliceId).createFill(sliceId, size, salePrice);
+		final MyLogger logger = new MyLogger(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, size, salePrice);
 		if (o.sizeRemaining() == 0) // this is never being run
 			Database.write(o);
 		sendOrderToTrader(id, o, TradeScreen.api.fill);
@@ -263,7 +262,7 @@ public class OrderManager {
 	}
 
 	private void price(int id, Order o) throws IOException {
-		liveMarketData.setPrice(o); // doesn't do anything right now, as interface is not yet implemented
+//		liveMarketData.setPrice(o); // doesn't do anything right now, as interface is not yet implemented // Harry: I think it might be changing the initialMarketPrice.
 		sendOrderToTrader(id, o, TradeScreen.api.price);
 	}
 

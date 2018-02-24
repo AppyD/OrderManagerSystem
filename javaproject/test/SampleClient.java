@@ -16,13 +16,17 @@ import Ref.Ric;
 
 public class SampleClient extends Mock implements Client{
 
+	private static LiveMarketData liveMarketData = new SampleLiveMarketData();
 	private static final Random RANDOM_NUM_GENERATOR = new Random();
 	private static final Map<Instrument,Double> instruments = createInstruments();
 	private static Map<Instrument,Double> createInstruments() {
 		Map<Instrument,Double> instruments = new HashMap<>();
-		instruments.put(new Instrument(new Ric("VOD.L")), 199*RANDOM_NUM_GENERATOR.nextDouble());
-		instruments.put(new Instrument(new Ric("BP.L")),  199*RANDOM_NUM_GENERATOR.nextDouble()); // TODO: use SampleLiveMarketData to retrieve these values, instead of just creating your
-		instruments.put(new Instrument(new Ric("BT.L")),  199*RANDOM_NUM_GENERATOR.nextDouble()); // TODO: own version here. This is a quick and dirty workaround right now...
+		double price1 = liveMarketData.getPrice();
+		double price2 = liveMarketData.getPrice();
+		double price3 = liveMarketData.getPrice();
+		instruments.put(new Instrument(new Ric("VOD.L")), price1);
+		instruments.put(new Instrument(new Ric("BP.L")),  price2);
+		instruments.put(new Instrument(new Ric("BT.L")),  price3);
 		return instruments;
 	}
 
@@ -45,7 +49,7 @@ public class SampleClient extends Mock implements Client{
 		double price = instruments.get(instrument);
 		NewOrderSingle nos = new NewOrderSingle(size,price,instrument);
 
-		show("sendOrder: transactionID=" + id + "; size=" + size + "; instrument=" + instrument.toString());
+		System.out.println("sendOrder: transactionID=" + id + "; size=" + size + "; instrument=" + instrument.toString());
 		OUT_QUEUE.put(id,nos);
 		if (omConn.isConnected()) {
 			ObjectOutputStream os = new ObjectOutputStream(omConn.getOutputStream());
