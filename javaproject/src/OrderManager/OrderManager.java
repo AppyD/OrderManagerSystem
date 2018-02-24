@@ -266,10 +266,8 @@ public class OrderManager {
 		sendOrderToTrader(id, o, TradeScreen.api.price);
 	}
 
-<<<<<<< HEAD
-=======
 	private void printOrders() {
 		System.out.println("Orders so far: " + orders.entrySet());
 	}
->>>>>>> OrderRefactor
+
 }

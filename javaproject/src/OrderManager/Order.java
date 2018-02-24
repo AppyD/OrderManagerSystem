@@ -73,12 +73,8 @@ public class Order implements Serializable {
 		return size - sizeFilled();
 	}
 
-<<<<<<< HEAD
-	float price(){
-=======
 	// Not really sure what this is meant to do.
 	float price() {
->>>>>>> OrderRefactor
 		//TODO this is buggy as it doesn't take account of slices. Let them fix it
 		float sum = 0;
 		for (Fill fill : fills)
