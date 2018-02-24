@@ -1,5 +1,5 @@
 package Logger;
-import OrderManager.Order;
+
 import Ref.Instrument;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -8,10 +8,13 @@ public class MyLogger {
 
     private Logger logger;
 
+    public MyLogger(String className, String string) {
+        logInfo(className, string);
+    }
     public MyLogger(String className, Exception ex) {
         logException(className, ex);
     }
-    public MyLogger(String className, int OrderID, int clientID, int clientOrderID, int size, Instrument instrument, float price) {
+    public MyLogger(String className, int OrderID, int clientID, int clientOrderID, int size, Instrument instrument, double price) {
         logTrade(className, OrderID, clientID, clientOrderID, size, instrument, price);
     }
     public MyLogger(String className, int clientID, int clientOrderID, int sliceSize, Instrument instrument) {
@@ -21,13 +24,19 @@ public class MyLogger {
         logFill(className, clientID, clientOrderID, fillID, sliceID, size, price);
     }
 
-    public void logException(String className, Exception ex) {
+    private void logInfo(String className, String string){
+        logger = org.apache.log4j.Logger.getLogger(className);
+        PropertyConfigurator.configure("resources/log4jv2.properties");
+        logger.info(string);
+    }
+
+    private void logException(String className, Exception ex) {
         logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4j.properties");
         logger.error("ISSUE", ex);
     }
 
-    private void logTrade(String className, int OrderID, int clientID, int clientOrderID, int size, Instrument instrument, float price) {
+    private void logTrade(String className, int OrderID, int clientID, int clientOrderID, int size, Instrument instrument, double price) {
         logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4jv2.properties");
         logger.info("ORDER -- ORDER ID: " + OrderID + " -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Quantity: " + size + " --  Instrument: " + instrument + " --  Price: " + price);
@@ -42,6 +51,6 @@ public class MyLogger {
     private void logFill(String className, int clientID, int clientOrderID, int fillID, int sliceID, int size, double price) {
         logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4jv2.properties");
-        logger.info("FILL -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Fill ID: " + fillID + " -- Slice ID: " + sliceID + " -- Slice Size: " + size + " --  Price: " + price);
+        logger.info("FILL  -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Fill ID: " + fillID + " -- Slice ID: " + sliceID + " -- Slice Size: " + size + " --  Price: " + price);
     }
 }

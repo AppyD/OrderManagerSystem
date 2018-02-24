@@ -4,9 +4,10 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
-import Logger.MyLogger;
+import LiveMarketData.LiveMarketData;
 import OrderClient.Client;
 import OrderClient.NewOrderSingle;
 import OrderManager.Order;
@@ -15,14 +16,24 @@ import Ref.Ric;
 
 public class SampleClient extends Mock implements Client{
 
+	private static LiveMarketData liveMarketData = new SampleLiveMarketData();
 	private static final Random RANDOM_NUM_GENERATOR = new Random();
-	private static final Instrument[] INSTRUMENTS = {new Instrument(new Ric("VOD.L")),
-													 new Instrument(new Ric("BP.L")),
-													 new Instrument(new Ric("BT.L"))};
+	private static final Map<Instrument,Double> instruments = createInstruments();
+	private static Map<Instrument,Double> createInstruments() {
+		Map<Instrument,Double> instruments = new HashMap<>();
+		double price1 = liveMarketData.getPrice();
+		double price2 = liveMarketData.getPrice();
+		double price3 = liveMarketData.getPrice();
+		instruments.put(new Instrument(new Ric("VOD.L")), price1);
+		instruments.put(new Instrument(new Ric("BP.L")),  price2);
+		instruments.put(new Instrument(new Ric("BT.L")),  price3);
+		return instruments;
+	}
+
 	private static final HashMap OUT_QUEUE = new HashMap(); //queue for outgoing orders
-	private int id = 0; //message id number
+	private int id = 0;    //message transactionID number
 	private Socket omConn; //connection to order manager
-	enum methods{newOrderSingleAcknowledgement,dontKnow};
+	enum methods{newOrderSingleAcknowledgement,dontKnow}
 
 	public SampleClient(int port) throws IOException {
 		//OM will connect to us
@@ -31,16 +42,16 @@ public class SampleClient extends Mock implements Client{
 	}
 
 	@Override
-	public int sendOrder()throws IOException {
+	public int sendOrder() throws IOException {
 		int size = RANDOM_NUM_GENERATOR.nextInt(5000);
-		int instid = RANDOM_NUM_GENERATOR.nextInt(INSTRUMENTS.length);
-		Instrument instrument = INSTRUMENTS[instid];
-		// changed from generating a random number to using the random number already generated, thus linking instrument & ID
-		NewOrderSingle nos = new NewOrderSingle(size,instid,instrument); // price is 2nd parameter
+		int instID = RANDOM_NUM_GENERATOR.nextInt(instruments.size());
+		Instrument instrument = instruments.keySet().toArray(new Instrument[instruments.size()-1])[instID];
+		double price = instruments.get(instrument);
+		NewOrderSingle nos = new NewOrderSingle(size,price,instrument);
 
-		show("sendOrder: id="+id+" size="+size+" instrument=" + INSTRUMENTS[instid].toString());
+		System.out.println("sendOrder: transactionID=" + id + "; size=" + size + "; instrument=" + instrument.toString());
 		OUT_QUEUE.put(id,nos);
-		if(omConn.isConnected()){
+		if (omConn.isConnected()) {
 			ObjectOutputStream os = new ObjectOutputStream(omConn.getOutputStream());
 			os.writeObject("newOrderSingle");
 			os.writeInt(id);
@@ -52,7 +63,7 @@ public class SampleClient extends Mock implements Client{
 
 	@Override
 	public void sendCancel(int idToCancel){
-		show("sendCancel: id=" + idToCancel);
+		show("sendCancel: transactionID=" + idToCancel);
 		if(omConn.isConnected()){
 			//OMconnection.sendMessage("cancel",idToCancel);
 		}

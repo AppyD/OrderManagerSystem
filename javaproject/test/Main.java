@@ -1,14 +1,13 @@
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import LiveMarketData.LiveMarketData;
 import OrderManager.OrderManager;
-import Logger.MyLogger;
-import org.apache.log4j.PropertyConfigurator;
 
-public class Main {
+public class Main{
 
-	public static void main(String[] args) {
-		System.out.println("TEST: This program tests OrderManager");
+	public static void main(String[] args) throws IOException{
 
 		//Create and start 2 sample clients
 		MockClient c1 = new MockClient("Client 1",2000);
@@ -28,14 +27,15 @@ public class Main {
 		                     		   new InetSocketAddress("localhost",2011)};
 		InetSocketAddress   trader  =  new InetSocketAddress("localhost",2020);
 		LiveMarketData liveMarketData = new SampleLiveMarketData();
-		(new MockOM("Order Manager",routers,clients,trader,liveMarketData)).start();
+		(new MockOM("Order Manager", routers, clients, trader, liveMarketData)).start();
 	}
+
 }
 
-class MockClient extends Thread {
+class MockClient extends Thread{
 	int port;
 
-	MockClient(String name,int port) {
+	MockClient(String name,int port){
 		this.port=port;
 		this.setName(name);
 	}
@@ -46,33 +46,34 @@ class MockClient extends Thread {
 			if (port == 2000) {
 				client.sendOrder();
 				int id = client.sendOrder();
-				//TODO client.sendCancel(id);
+				//TODO client.sendCancel(transactionID);
 				client.messageHandler();
 			} else {
 				if (port == 2004) { // differentiates between clients
 					client.sendOrder(); // creates and sends an order
 					int id = client.sendOrder();
-					//TODO client.sendCancel(id);
+					//TODO client.sendCancel(transactionID);
 					client.messageHandler();
 				} else {
 					client.sendOrder();
 					client.messageHandler();
 				}
 			}
-		} catch(IOException e) {
+		}
+		catch(IOException e){
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 }
 
-class MockOM extends Thread {
+class MockOM extends Thread{
 	InetSocketAddress[] clients;
 	InetSocketAddress[] routers;
 	InetSocketAddress trader;
 	LiveMarketData liveMarketData;
 
-	MockOM(String name,InetSocketAddress[] routers,InetSocketAddress[] clients,InetSocketAddress trader,LiveMarketData liveMarketData) {
+	MockOM(String name,InetSocketAddress[] routers,InetSocketAddress[] clients,InetSocketAddress trader,LiveMarketData liveMarketData){
 		this.clients=clients;
 		this.routers=routers;
 		this.trader=trader;
@@ -81,13 +82,15 @@ class MockOM extends Thread {
 	}
 
 	@Override
-	public void run() {
-		try {
+	public void run(){
+		try{
 			//In order to debug constructors you can do F5 F7 F5
 			new OrderManager(routers,clients,trader,liveMarketData);
-		} catch(IOException | ClassNotFoundException | InterruptedException ex){
+		}catch(IOException | ClassNotFoundException | InterruptedException ex){
 			// Set up logging
-			final MyLogger logger = new MyLogger(MockOM.class.getName(), ex);
+			final Logger logger = Logger.getLogger(Main.class.getName());
+			PropertyConfigurator.configure("resources/log4j.properties");
+			logger.debug("SEVERE; null",ex);
 		}
 	}
 }

@@ -5,4 +5,5 @@ import Ref.Instrument;
 
 public interface LiveMarketData {
 	void setPrice(Order o);
+	double getPrice();
 }
