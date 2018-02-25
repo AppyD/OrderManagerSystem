@@ -5,19 +5,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Map;
-import Database.Database;
+import java.util.Random;
 import LiveMarketData.LiveMarketData;
 import Logger.MyLogger;
 import OrderClient.NewOrderSingle;
 import OrderRouter.Router;
-import Ref.Instrument;
 import TradeScreen.TradeScreen;
 
 public class OrderManager {
 
+	private static final Random RANDOM_NUM_GENERATOR = new Random();
 	private static LiveMarketData liveMarketData;
 	private Map<Integer,Order> orders = new HashMap<>(); // debugger will do this line as it gives state to the object
 														 // currently recording the number of new order messages we get. TODO why? use it for more?
@@ -71,7 +70,7 @@ public class OrderManager {
 		i = 0;
 
 		for (InetSocketAddress location : clients) {
-			this.clients[i]=connect(location);
+			this.clients[i] = connect(location);
 			i++;
 		}
 
@@ -92,7 +91,7 @@ public class OrderManager {
 							newOrder(clientId, is.readInt(), (NewOrderSingle)is.readObject());
 							break;
 						default:
-							throw new IllegalArgumentException("ERROR: Message type " + method + "is unknown.");
+							throw new IllegalArgumentException("ERROR: Message type " + method + " from client is unknown.");
 					}
 				}
 			}
@@ -122,7 +121,7 @@ public class OrderManager {
 
 			if (this.trader != null && 0 < this.trader.getInputStream().available()) {
 				ObjectInputStream is = new ObjectInputStream(this.trader.getInputStream());
-				String method = (String) is.readObject();
+				String method = (String) is.readObject();										//TODO: the exception is thrown here - no more data coming from the stream...
 				System.out.println(Thread.currentThread().getName() + " calling " + method);
 				switch (method) {
 					case "acceptOrder":
@@ -130,6 +129,7 @@ public class OrderManager {
 						break;
 					case "sliceOrder":
 						sliceOrder(is.readInt(), is.readInt());
+						break;
 				}
 			}
 		}
@@ -143,7 +143,7 @@ public class OrderManager {
 		//newOrderSingle acknowledgement;  //clientOrderID =11 (Fix 11?)
 		os.writeObject("11=" + clientOrderID + "; 35=A; 39=A;");
 		os.flush();
-		sendOrderToTrader(id,orders.get(id),TradeScreen.api.newOrder);
+		sendOrderToTrader(id, orders.get(id), TradeScreen.api.newOrder);
 		//send the new order to the trading screen
 		//don't do anything else with the order, as we are simulating high touch orders and so need to wait for the trader to accept the order
 		id++;
@@ -210,14 +210,20 @@ public class OrderManager {
 
 	private void newFill(int id, int sliceId, int size, double price) throws IOException {
 		Order o = orders.get(id);
-		Instrument instrument = o.instrument;
+
+		// Calculate a sale price based on a random market fluctuation of up to 3% plus or minus from the initial market value.
 		double salePrice = o.initialMarketPrice;
-		if (price < salePrice)   // TODO: Check if this is correct - it is right for a buyer, as they would want to pay <= a maximum price (ie initialMarketPrice).
-			salePrice = price;   // Otherwise, use salePrice for the newFill, ie someone completed the fill at the asking price.
+		double marketVariation = (salePrice*3/100)*RANDOM_NUM_GENERATOR.nextDouble(); // CHANGE: currently set to a variance of within 3% of the initial market value.
+		if (RANDOM_NUM_GENERATOR.nextInt()%2 == 0)
+			salePrice -= marketVariation;
+		else
+			salePrice += marketVariation;
+
 		o.slices.get(sliceId).createFill(sliceId, size, salePrice);
-		final MyLogger logger = new MyLogger(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, size, salePrice);
+		MyLogger logger = new MyLogger(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, size, salePrice);
+
 		if (o.sizeRemaining() == 0) // this is never being run
-			Database.write(o);
+			logger.logInfo(OrderManager.class.getName(), "Order ID " + id + " has been fully filled.");
 		sendOrderToTrader(id, o, TradeScreen.api.fill);
 	}
 
@@ -249,7 +255,7 @@ public class OrderManager {
 		}
 		ObjectOutputStream os = new ObjectOutputStream(orderRouters[minIndex].getOutputStream());
 		os.writeObject(Router.api.routeOrder);
-		os.writeInt((int) o.transactionID);
+		os.writeInt((int) o.sliceId);
 		os.writeInt(sliceId);
 		os.writeInt(o.sizeRemaining());
 		os.writeObject(o.instrument);

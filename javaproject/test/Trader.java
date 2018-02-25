@@ -48,7 +48,7 @@ public class Trader extends Thread implements TradeScreen {
 							break; //TODO
 						case fill:
 							fill(is.readInt(), (Order)is.readObject());
-							break; //TODO
+							break; //TODO: fix this, as this is not working at the moment as it should be...
 					}
 				} else {
 					//System.out.println("Trader Waiting for data to be available - sleep 1s");
@@ -64,7 +64,7 @@ public class Trader extends Thread implements TradeScreen {
 	}
 
 	@Override
-	public void newOrder(int id,Order order) throws IOException, InterruptedException {
+	public void newOrder(int id, Order order) throws IOException, InterruptedException {
 		//TODO the order should go in a visual grid, but not needed for test purposes
 		Thread.sleep(2134);
 		orders.put(id, order);
@@ -89,7 +89,7 @@ public class Trader extends Thread implements TradeScreen {
 	}
 
 	@Override
-	public void price(int id, Order o) throws InterruptedException, IOException {
+	public void price(int id, Order o) throws IOException {
 		//TODO should update the trade screen
 //		Thread.sleep(2134);
 //		sliceOrder(id,orders.get(id).sizeRemaining()/2);
@@ -102,10 +102,12 @@ public class Trader extends Thread implements TradeScreen {
 
 	// method made by Appy --> needs to be edited to make sense!
 	// right now it is just set to flush the output stream so that the exception in Main is raised.
-	public void fill(int id, Order o) throws IOException{
+	@Override
+	public void fill(int id, Order o) throws IOException {
 		os = new ObjectOutputStream(omConn.getOutputStream());
-		
+		os.writeObject("newFill");
 		os.writeInt(id);
+		os.writeObject(o);
 		os.flush();
 	}
 }

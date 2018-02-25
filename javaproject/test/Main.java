@@ -32,11 +32,11 @@ public class Main{
 
 }
 
-class MockClient extends Thread{
+class MockClient extends Thread {
 	int port;
 
-	MockClient(String name,int port){
-		this.port=port;
+	MockClient(String name,int port) {
+		this.port = port;
 		this.setName(name);
 	}
 
@@ -46,13 +46,13 @@ class MockClient extends Thread{
 			if (port == 2000) {
 				client.sendOrder();
 				int id = client.sendOrder();
-				//TODO client.sendCancel(transactionID);
+				//TODO client.sendCancel(sliceId);
 				client.messageHandler();
 			} else {
 				if (port == 2004) { // differentiates between clients
 					client.sendOrder(); // creates and sends an order
 					int id = client.sendOrder();
-					//TODO client.sendCancel(transactionID);
+					//TODO client.sendCancel(sliceId);
 					client.messageHandler();
 				} else {
 					client.sendOrder();

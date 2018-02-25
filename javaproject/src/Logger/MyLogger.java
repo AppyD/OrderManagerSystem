@@ -24,7 +24,7 @@ public class MyLogger {
         logFill(className, clientID, clientOrderID, fillID, sliceID, size, price);
     }
 
-    private void logInfo(String className, String string){
+    public void logInfo(String className, String string){
         logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4jv2.properties");
         logger.info(string);
@@ -42,15 +42,15 @@ public class MyLogger {
         logger.info("ORDER -- ORDER ID: " + OrderID + " -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Quantity: " + size + " --  Instrument: " + instrument + " --  Price: " + price);
     }
 
-    private void logSlice(String className, int clientID, int clientOrderID, int sliceSize, Instrument instrument) {
+    private void logSlice(String className,              int clientID, int clientOrderID, int sliceSize, Instrument instrument) {
         logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4jv2.properties");
-        logger.info("SLICE -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Slice Size: " + sliceSize + " --  Instrument: " + instrument);
+        logger.info("SLICE --             -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Slice Size: " + sliceSize + " --  Instrument: " + instrument);
     }
 
-    private void logFill(String className, int clientID, int clientOrderID, int fillID, int sliceID, int size, double price) {
+    private void logFill(String className,               int clientID, int clientOrderID, int fillID, int sliceID, int size, double price) {
         logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4jv2.properties");
-        logger.info("FILL  -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Fill ID: " + fillID + " -- Slice ID: " + sliceID + " -- Slice Size: " + size + " --  Price: " + price);
+        logger.info("FILL  --             -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Fill ID: " + fillID + " -- Slice ID: " + sliceID + " -- Slice Size: " + size + " --  Price: " + price);
     }
 }

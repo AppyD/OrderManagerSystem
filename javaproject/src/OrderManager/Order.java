@@ -6,7 +6,7 @@ import Logger.MyLogger;
 import Ref.Instrument;
 
 public class Order implements Serializable {
-	public long transactionID; // I think this might basically be a sliceID, to uniquely identify each part when an order is sliced up?
+	public long sliceId;
 	public int clientOrderID;
     long clientID;
 //	short orderRouter;
@@ -52,8 +52,7 @@ public class Order implements Serializable {
 
 	// Adds a new order to the 'slices' ArrayList, and returns the index of this new order within the List.
 	public int newSlice(int sliceSize) {
-		slices.add(new Order(transactionID, clientOrderID, instrument, sliceSize));
-		slices.add(new Order(clientID, clientOrderID, instrument, sliceSize)); // changed ID to clientID
+		slices.add(new Order(clientID, clientOrderID, instrument, sliceSize, initialMarketPrice)); // changed ID to clientID
 		final MyLogger logger = new MyLogger(Order.class.getName(), (int) clientID, clientOrderID, sliceSize, instrument);
 		return slices.size() - 1;
 	}
@@ -83,12 +82,12 @@ public class Order implements Serializable {
 	}
 
 	// Adds a new fill to the 'fills' ArrayList, and updated the OrdStatus of the current order.
-	void createFill(long transactionID, int size, double price) {
-		fills.add(new Fill(transactionID, size, price));
+	void createFill(long sliceId, int size, double price) {
+		fills.add(new Fill(sliceId, size, price));
 		if (sizeRemaining() == 0)
 			OrdStatus = '2';
 		else
-			OrdStatus = '1';
+			OrdStatus = '1';				// TODO: where does OrdStatus get used?
 	}
 
 	// This matches an order with this one, to try to complete as many trades as possible (using the slices ArrayList).
@@ -105,13 +104,13 @@ public class Order implements Serializable {
 					continue;
 				int sizeS = slice.sizeRemaining();
 				if (sizeS <= sizeM) {
-					 slice.createFill(slice.transactionID, sizeS, initialMarketPrice);
-					 matchingSlice.createFill(matchingSlice.transactionID, sizeS, initialMarketPrice);
+					 slice.createFill(slice.sliceId, sizeS, initialMarketPrice);
+					 matchingSlice.createFill(matchingSlice.sliceId, sizeS, initialMarketPrice);
 					 break; // Breaks out with slice.sizeRemaining() = 0
 				}
 				// Else, (sizeS > sizeM)
-				slice.createFill(slice.transactionID, sizeM, initialMarketPrice);
-				matchingSlice.createFill(matchingSlice.transactionID, sizeM, initialMarketPrice);
+				slice.createFill(slice.sliceId, sizeM, initialMarketPrice);
+				matchingSlice.createFill(matchingSlice.sliceId, sizeM, initialMarketPrice);
 			}
 
 			// Don't understand when this would ever be the case... or either of the next two big loops for that matter
@@ -119,11 +118,11 @@ public class Order implements Serializable {
 			int mParent = matchingOrder.sizeRemaining() - matchingOrder.totalSizeOfSlices();
 			if(sizeS>0 && mParent>0) {
 				if (sizeS >= mParent) {
-					slice.createFill(slice.transactionID, sizeS, initialMarketPrice);
-					matchingOrder.createFill(matchingOrder.transactionID, sizeS, initialMarketPrice);
+					slice.createFill(slice.sliceId, sizeS, initialMarketPrice);
+					matchingOrder.createFill(matchingOrder.sliceId, sizeS, initialMarketPrice);
 				} else {
-					slice.createFill(slice.transactionID, mParent, initialMarketPrice);
-					matchingOrder.createFill(matchingOrder.transactionID, mParent, initialMarketPrice);
+					slice.createFill(slice.sliceId, mParent, initialMarketPrice);
+					matchingOrder.createFill(matchingOrder.sliceId, mParent, initialMarketPrice);
 				}
 			}
 
@@ -139,13 +138,13 @@ public class Order implements Serializable {
 					continue;
 				int sizeS = sizeRemaining();
 				if (sizeS <= sizeM) {
-					 createFill(transactionID, sizeS, initialMarketPrice);
-					 matchingSlice.createFill(matchingSlice.transactionID, sizeS, initialMarketPrice);
+					 createFill(sliceId, sizeS, initialMarketPrice);
+					 matchingSlice.createFill(matchingSlice.sliceId, sizeS, initialMarketPrice);
 					 break;
 				}
 				//if (sizeS > sizeM)
-				createFill(transactionID, sizeM, initialMarketPrice);
-				matchingSlice.createFill(matchingSlice.transactionID, sizeM, initialMarketPrice);
+				createFill(sliceId, sizeM, initialMarketPrice);
+				matchingSlice.createFill(matchingSlice.sliceId, sizeM, initialMarketPrice);
 			}
 
 			int sizeS = sizeRemaining();
@@ -153,11 +152,11 @@ public class Order implements Serializable {
 
 			if(sizeS>0 && mParent>0){
 				if (sizeS >= mParent) {
-					createFill(transactionID, sizeS, initialMarketPrice);
-					matchingOrder.createFill(matchingOrder.transactionID, sizeS, initialMarketPrice);
+					createFill(sliceId, sizeS, initialMarketPrice);
+					matchingOrder.createFill(matchingOrder.sliceId, sizeS, initialMarketPrice);
 				} else {
-					createFill(transactionID, mParent, initialMarketPrice);
-					matchingOrder.createFill(matchingOrder.transactionID, mParent, initialMarketPrice);
+					createFill(sliceId, mParent, initialMarketPrice);
+					matchingOrder.createFill(matchingOrder.sliceId, mParent, initialMarketPrice);
 				}
 			}
 		}
@@ -179,12 +178,12 @@ class Basket implements Serializable {
 }
 
 class Fill implements Serializable {
-	long transactionID;
+	long sliceId;
 	int size;
 	double price;
 
-	Fill(long transactionID, int size, double price) {
-		this.transactionID = transactionID;
+	Fill(long sliceId, int size, double price) {
+		this.sliceId = sliceId;
 		this.size = size;
 		this.price = price;
 	}
