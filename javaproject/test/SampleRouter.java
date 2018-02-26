@@ -53,24 +53,21 @@ public class SampleRouter extends Thread implements Router{
 	@Override
 	public void routeOrder(int id, int sliceId, int size, Instrument i) throws IOException, InterruptedException { //MockI.show(""+order);
 		int fillSize = RANDOM_NUM_GENERATOR.nextInt(size);
-		//TODO: have this similar to the market price of the instrument
-		double fillPrice = 199*RANDOM_NUM_GENERATOR.nextDouble();
 		Thread.sleep(42);
 		os = new ObjectOutputStream(omConn.getOutputStream());
 		os.writeObject("newFill");
 		os.writeInt(id);
 		os.writeInt(sliceId);
 		os.writeInt(fillSize);
-		os.writeDouble(fillPrice);
 		os.flush();
 	}
 
 	@Override
-	public void sendCancel(int id,int sliceId,int size,Instrument i) { //MockI.show(""+order);
+	public void sendCancel(int id, int sliceId, int size, Instrument i) { //MockI.show(""+order);
 	}
 
 	@Override
-	public void priceAtSize(int id, int sliceId,Instrument i, int size) throws IOException {
+	public void priceAtSize(int id, int sliceId, Instrument i, int size) throws IOException {
 		os = new ObjectOutputStream(omConn.getOutputStream());
 		os.writeObject("bestPrice");
 		os.writeInt(id);

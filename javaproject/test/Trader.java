@@ -93,7 +93,7 @@ public class Trader extends Thread implements TradeScreen {
 		//TODO should update the trade screen
 //		Thread.sleep(2134);
 //		sliceOrder(id,orders.get(id).sizeRemaining()/2);
-		int maxSliceSize = 1000;
+		int maxSliceSize = 100;
 		if (orders.get(id).sizeRemaining() < maxSliceSize)
 			sliceOrder(id, orders.get(id).sizeRemaining());
 		else
@@ -105,7 +105,7 @@ public class Trader extends Thread implements TradeScreen {
 	@Override
 	public void fill(int id, Order o) throws IOException {
 		os = new ObjectOutputStream(omConn.getOutputStream());
-		os.writeObject("newFill");
+//		os.writeObject("newFill");
 		os.writeInt(id);
 		os.writeObject(o);
 		os.flush();

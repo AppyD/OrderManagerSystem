@@ -113,7 +113,7 @@ public class OrderManager {
 								reallyRouteOrder(SliceId, slice);
 							break;
 						case "newFill":
-							newFill(is.readInt(), is.readInt(), is.readInt(), is.readDouble());
+							newFill(is.readInt(), is.readInt(), is.readInt());
 							break;
 					}
 				}
@@ -130,6 +130,8 @@ public class OrderManager {
 					case "sliceOrder":
 						sliceOrder(is.readInt(), is.readInt());
 						break;
+//					case "fill":
+//						newFill
 				}
 			}
 		}
@@ -208,7 +210,7 @@ public class OrderManager {
 		//TODO
 	}
 
-	private void newFill(int id, int sliceId, int size, double price) throws IOException {
+	private void newFill(int id, int sliceId, int fillSize) throws IOException {
 		Order o = orders.get(id);
 
 		// Calculate a sale price based on a random market fluctuation of up to 3% plus or minus from the initial market value.
@@ -216,11 +218,9 @@ public class OrderManager {
 		double marketVariation = (salePrice*3/100)*RANDOM_NUM_GENERATOR.nextDouble(); // CHANGE: currently set to a variance of within 3% of the initial market value.
 		if (RANDOM_NUM_GENERATOR.nextInt()%2 == 0)
 			salePrice -= marketVariation;
-		else
-			salePrice += marketVariation;
 
-		o.slices.get(sliceId).createFill(sliceId, size, salePrice);
-		MyLogger logger = new MyLogger(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, size, salePrice);
+		o.slices.get(sliceId).createFill(sliceId, fillSize, salePrice);
+		MyLogger logger = new MyLogger(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, fillSize, salePrice);
 
 		if (o.sizeRemaining() == 0) // this is never being run
 			logger.logInfo(OrderManager.class.getName(), "Order ID " + id + " has been fully filled.");
@@ -255,7 +255,7 @@ public class OrderManager {
 		}
 		ObjectOutputStream os = new ObjectOutputStream(orderRouters[minIndex].getOutputStream());
 		os.writeObject(Router.api.routeOrder);
-		os.writeInt((int) o.sliceId);
+		os.writeInt((int) o.orderID);
 		os.writeInt(sliceId);
 		os.writeInt(o.sizeRemaining());
 		os.writeObject(o.instrument);

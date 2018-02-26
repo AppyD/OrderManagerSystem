@@ -398,3 +398,69 @@ java.io.StreamCorruptedException: invalid stream header: 77040000
 	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:354)
 	at OrderManager.OrderManager.<init>(OrderManager.java:124)
 	at MockOM.run(Main.java:88)
+26-02-2018 10:45:05 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.StreamCorruptedException: invalid stream header: 77040000
+	at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:857)
+	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:349)
+	at OrderManager.OrderManager.<init>(OrderManager.java:123)
+	at MockOM.run(Main.java:88)
+26-02-2018 10:46:34 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.StreamCorruptedException: invalid stream header: 77040000
+	at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:857)
+	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:349)
+	at OrderManager.OrderManager.<init>(OrderManager.java:123)
+	at MockOM.run(Main.java:88)
+26-02-2018 10:47:02 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:124)
+	at MockOM.run(Main.java:88)
+26-02-2018 10:47:18 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:124)
+	at MockOM.run(Main.java:88)
+26-02-2018 10:50:57 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:124)
+	at MockOM.run(Main.java:88)
+26-02-2018 11:04:16 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:124)
+	at MockOM.run(Main.java:88)
+26-02-2018 11:11:34 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:124)
+	at MockOM.run(Main.java:88)
+26-02-2018 11:16:52 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:124)
+	at MockOM.run(Main.java:88)
+26-02-2018 11:17:32 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:124)
+	at MockOM.run(Main.java:88)
+26-02-2018 11:22:22 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:124)
+	at MockOM.run(Main.java:88)
+26-02-2018 11:25:16 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.OptionalDataException
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1547)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:127)
+	at MockOM.run(Main.java:88)
