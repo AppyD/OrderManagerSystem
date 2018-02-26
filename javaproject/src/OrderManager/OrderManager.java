@@ -8,6 +8,8 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+import Database.Database;
 import LiveMarketData.LiveMarketData;
 import Logger.MyLogger;
 import OrderClient.NewOrderSingle;
@@ -18,7 +20,7 @@ public class OrderManager {
 
 	private static final Random RANDOM_NUM_GENERATOR = new Random();
 	private static LiveMarketData liveMarketData;
-	private Map<Integer,Order> orders = new HashMap<>(); // debugger will do this line as it gives state to the object
+	private Map<Integer,Order> orders = new ConcurrentHashMap<>(); // debugger will do this line as it gives state to the object
 														 // currently recording the number of new order messages we get. TODO why? use it for more?
 	// maybe we can use it for outstandingOrders, and remove any orders when they
 	private int id = 0; 								 // debugger will do this line as it gives state to the object
@@ -50,7 +52,7 @@ public class OrderManager {
 						InetSocketAddress[] clients,
 						InetSocketAddress trader,
 						LiveMarketData liveMarketData) throws IOException, ClassNotFoundException, InterruptedException {
-		logger = new MyLogger(OrderManager.class.getName(), "Starting systems..."); // Signifies the start of the log for each run.
+		MyLogger.logInfo(OrderManager.class.getName(), "Starting systems..."); // Signifies the start of the log for each run.
 		this.liveMarketData = liveMarketData;
 		this.trader = connect(trader);
 		//for the router connections, copy the input array into our object field.
@@ -68,14 +70,14 @@ public class OrderManager {
 
 		//repeat for the client connections
 		i = 0;
-
 		for (InetSocketAddress location : clients) {
 			this.clients[i] = connect(location);
 			i++;
 		}
 
+		boolean ordersToDo = true;
 		//main loop, wait for a message, then process it
-		while(true){
+		while(ordersToDo){
 
 			//TODO this is pretty cpu intensive, use a more modern polling/interrupt/select approach
 			//we want to use the array index as the clientId, so use traditional for loop instead of foreach
@@ -132,14 +134,47 @@ public class OrderManager {
 						break;
 //					case "fill":
 //						newFill
+					case "endTrade":
+						endTrade(is.readInt(), (Order)is.readObject());
+						for (Order order: this.orders.values()){
+							if (order.sizeRemaining() != 0){
+								break;
+							}
+						}
+						ordersToDo = false;
+						break;
 				}
 			}
 		}
+		System.out.println("All orders have been processed. System exiting...");
+		// close router connections
+		i=0;
+		for (InetSocketAddress location : orderRouters) {
+			this.orderRouters[i].close();
+			i++;
+		}
+		System.out.println("Router connections have been closed.");
+		// close client connections
+		i = 0;
+		for (InetSocketAddress location : clients) {
+			this.clients[i].close();
+			i++;
+		}
+		System.out.println("Client connections have been closed.");
+		// close trader connection
+		this.trader.close();
+		System.out.println("Trader connection has closed.");
+		System.out.println("System closed successfully. Goodbye.");
+		System.exit(0);
+	}
+
+	private void endTrade(int id, Order o){
+		System.out.println("Order " + o.transactionID + " for client " + o.clientID + " has been completed.");
 	}
 
 	private void newOrder(int clientID, int clientOrderID, NewOrderSingle nos) throws IOException {
 		orders.put(id, new Order(clientID, clientOrderID, nos.instrument, nos.size, nos.price));
-		logger = new MyLogger(OrderManager.class.getName(), id, clientID, clientOrderID, nos.size, nos.instrument, nos.price);
+		MyLogger.logOrder(OrderManager.class.getName(), id, clientID, clientOrderID, nos.size, nos.instrument, nos.price);
 		//send a message to the client with 39=A; //OrdStatus is Fix 39, 'A' is 'Pending New'
 		ObjectOutputStream os = new ObjectOutputStream(clients[clientID].getOutputStream());
 		//newOrderSingle acknowledgement;  //clientOrderID =11 (Fix 11?)
@@ -233,6 +268,13 @@ public class OrderManager {
 		if (slice.OrdStatus == '2') // this is never being run
 			logger.logInfo(OrderManager.class.getName(), "Slice ID: " + sliceId + " has been fully filled.");
 
+		if (price < salePrice)   // TODO: Check if this is correct - it is right for a buyer, as they would want to pay <= a maximum price (ie initialMarketPrice).
+			salePrice = price;   // Otherwise, use salePrice for the newFill, ie someone completed the fill at the asking price.
+		o.slices.get(sliceId).createFill(sliceId, size, salePrice);
+		MyLogger.logFill(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, size, salePrice);
+
+		if (o.sizeRemaining() == 0) // this is never being run
+			Database.write(o);
 		sendOrderToTrader(id, o, TradeScreen.api.fill);
 	}
 
@@ -243,7 +285,7 @@ public class OrderManager {
 			os.writeInt(id);
 			os.writeInt(sliceId);
 			os.writeObject(order.instrument);
-			os.writeInt(order.sizeRemaining());
+			os.writeInt(size); // changed order.sizeRemaining() to size
 			os.flush();
 		}
 

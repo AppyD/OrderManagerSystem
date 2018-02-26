@@ -8,7 +8,6 @@ import OrderManager.OrderManager;
 public class Main{
 
 	public static void main(String[] args) throws IOException{
-
 		//Create and start 2 sample clients
 		MockClient c1 = new MockClient("Client 1",2000);
 		MockClient c2 = new MockClient("Client 2",2001);
@@ -58,7 +57,14 @@ class MockClient extends Thread {
 					client.sendOrder();
 					client.messageHandler();
 				}
+				client.sendOrder();
+				//TODO client.sendCancel(transactionID);
+				client.messageHandler();
 			}
+			else {
+				client.sendOrder();
+				client.messageHandler();
+				}
 		}
 		catch(IOException e){
 				// TODO Auto-generated catch block

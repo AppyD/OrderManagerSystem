@@ -52,7 +52,7 @@ public class Trader extends Thread implements TradeScreen {
 					}
 				} else {
 					//System.out.println("Trader Waiting for data to be available - sleep 1s");
-//					Thread.sleep(1000);
+					Thread.sleep(1000);
 				}
 			}
 		} catch (ClassNotFoundException | InterruptedException e) {
@@ -106,6 +106,7 @@ public class Trader extends Thread implements TradeScreen {
 	public void fill(int id, Order o) throws IOException {
 		os = new ObjectOutputStream(omConn.getOutputStream());
 //		os.writeObject("newFill");
+		os.writeObject("endTrade");
 		os.writeInt(id);
 		os.writeObject(o);
 		os.flush();
