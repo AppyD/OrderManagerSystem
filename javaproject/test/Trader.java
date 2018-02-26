@@ -105,7 +105,6 @@ public class Trader extends Thread implements TradeScreen {
 	@Override
 	public void fill(int id, Order o) throws IOException {
 		os = new ObjectOutputStream(omConn.getOutputStream());
-//		os.writeObject("newFill");
 		os.writeObject("endTrade");
 		os.writeInt(id);
 		os.writeObject(o);

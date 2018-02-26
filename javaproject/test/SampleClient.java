@@ -42,14 +42,33 @@ public class SampleClient extends Mock implements Client{
 	}
 
 	@Override
-	public int sendOrder() throws IOException {
+	public int sendOrder(String buyOrSell) throws IOException {
 		int size = RANDOM_NUM_GENERATOR.nextInt(5000);
 		int instID = RANDOM_NUM_GENERATOR.nextInt(instruments.size()); //changed from a random number to one contained within the list of instruments, so is now related to the instruments.
 		Instrument instrument = instruments.keySet().toArray(new Instrument[instruments.size()-1])[instID];
 		double price = instruments.get(instrument);
-		NewOrderSingle nos = new NewOrderSingle(size,price,instrument);
 
-		System.out.println("sendOrder: orderID=" + id + "; size=" + size + "; instrument=" + instrument.toString());
+		boolean tradeType;
+		if (buyOrSell == "sell"){
+			tradeType = false;
+		}
+		else if (buyOrSell == "buy"){
+			tradeType = true;
+		}
+		else{
+			tradeType = true;
+		}
+
+		NewOrderSingle nos = new NewOrderSingle(size,price,instrument,tradeType);
+		String ttype;
+		if (tradeType){
+			ttype = "BUY";
+		}
+		else{
+			ttype = "SELL";
+		}
+
+		System.out.println(Thread.currentThread().getName() + " sendOrder: " + ttype + " orderID=" + id + "; size=" + size + "; instrument=" + instrument.toString());
 		OUT_QUEUE.put(id,nos);
 		if (omConn.isConnected()) {
 			ObjectOutputStream os = new ObjectOutputStream(omConn.getOutputStream());

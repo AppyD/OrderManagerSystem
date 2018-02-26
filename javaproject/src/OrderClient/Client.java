@@ -5,7 +5,7 @@ import OrderManager.Order;
 
 public interface Client{
 	//Outgoing messages
-	int sendOrder()throws IOException;
+	int sendOrder(String buyOrSell)throws IOException;
 	void sendCancel(int id);
 	
 	//Incoming messages

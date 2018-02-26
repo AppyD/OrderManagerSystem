@@ -9,10 +9,10 @@ public class Order implements Serializable {
 	public long orderID;
 	public int clientOrderID;
     long clientID;
+    boolean buyOrSell; // false for sell
 //	short orderRouter;
 	private int size;
 //	double price;           // For recording the price the client wishes to pay/receive for this order. TODO: Harry says implement this.
-//	public int side;		// 1=Buy, 2=Sell.
     public Instrument instrument;
 	double[] bestPrices;
 	int bestPriceCount;
@@ -23,7 +23,8 @@ public class Order implements Serializable {
     // Status state
 
     // The constructor for a new order.
-	public Order(long clientId, int ClientOrderID, Instrument instrument, int size, double initialMarketPrice) {
+	public Order(long clientId, int ClientOrderID, Instrument instrument, int size, double initialMarketPrice,
+				 Boolean buyOrSell) {
 		this.clientID = clientId;
 		this.clientOrderID = ClientOrderID;
 		this.instrument = instrument;
@@ -31,6 +32,7 @@ public class Order implements Serializable {
 		this.initialMarketPrice = initialMarketPrice;
 		slices = new ArrayList<>();
 		fills = new ArrayList<>();
+		this.buyOrSell = buyOrSell;
 	}
 
     // Calculates the total size of the orders in the 'slices' ArrayList.
@@ -43,7 +45,7 @@ public class Order implements Serializable {
 
 	// Adds a new order to the 'slices' ArrayList, and returns the index of this new order within the List.
 	public int newSlice(int sliceSize) {
-		slices.add(new Order(clientID, clientOrderID, instrument, sliceSize, initialMarketPrice)); // changed ID to clientID
+		slices.add(new Order(clientID, clientOrderID, instrument, sliceSize, initialMarketPrice, buyOrSell)); // changed ID to clientID
 		MyLogger.logSlice(Order.class.getName(), (int) clientID, clientOrderID, sliceSize, instrument);
 		return slices.size() - 1;
 	}

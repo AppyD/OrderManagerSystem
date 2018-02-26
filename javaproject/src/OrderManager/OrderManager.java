@@ -172,7 +172,7 @@ public class OrderManager {
 	}
 
 	private void newOrder(int clientID, int clientOrderID, NewOrderSingle nos) throws IOException {
-		orders.put(id, new Order(clientID, clientOrderID, nos.instrument, nos.size, nos.price));
+		orders.put(id, new Order(clientID, clientOrderID, nos.instrument, nos.size, nos.price, nos.tradeType));
 		MyLogger.logOrder(OrderManager.class.getName(), id, clientID, clientOrderID, nos.size, nos.instrument, nos.price);
 		//send a message to the client with 39=A; //OrdStatus is Fix 39, 'A' is 'Pending New'
 		ObjectOutputStream os = new ObjectOutputStream(clients[clientID].getOutputStream());
@@ -290,16 +290,30 @@ public class OrderManager {
 	}
 
 	private void reallyRouteOrder(int sliceId, Order o) throws IOException {
-		//TODO this assumes we are buying rather than selling
-		int minIndex = 0;
-		double min = o.bestPrices[0];
-		for (int i=1; i<o.bestPrices.length; i++) {
-			if (min > o.bestPrices[i]) {
-				minIndex = i;
-				min = o.bestPrices[i];
+
+		int index = 0;
+
+		if (o.buyOrSell){  // want lowest price when buying
+			double bp = o.bestPrices[0];
+			for (int i=1; i<o.bestPrices.length; i++) {
+				if (bp > o.bestPrices[i]) {
+					index = i;
+					bp = o.bestPrices[i];
+				}
 			}
 		}
-		ObjectOutputStream os = new ObjectOutputStream(orderRouters[minIndex].getOutputStream());
+		else{   // want highest price available when selling
+			index = Integer.MAX_VALUE;
+			double bp = o.bestPrices[0];
+			for (int i=1; i<o.bestPrices.length; i++) {
+				if (bp > o.bestPrices[i]) {
+					index = i;
+					bp = o.bestPrices[i];
+				}
+			}
+		}
+
+		ObjectOutputStream os = new ObjectOutputStream(orderRouters[index].getOutputStream());
 		os.writeObject(Router.api.routeOrder);
 		os.writeInt((int) o.orderID);
 		os.writeInt(sliceId);
