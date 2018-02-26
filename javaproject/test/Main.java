@@ -6,7 +6,7 @@ import OrderManager.OrderManager;
 
 public class Main{
 
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) {
 		//Create and start 2 sample clients
 		MockClient c1 = new MockClient("Client 1",2000);
 		MockClient c2 = new MockClient("Client 2",2001);
@@ -43,7 +43,7 @@ class MockClient extends Thread {
 			SampleClient client = new SampleClient(port);
 			if (port == 2000) {
 				client.sendOrder();
-				int id = client.sendOrder();
+				client.sendOrder();
 				//TODO client.sendCancel(orderID);
 				client.messageHandler();
 			} else {
