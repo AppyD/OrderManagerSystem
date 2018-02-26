@@ -22,16 +22,6 @@ public class Order implements Serializable {
     char OrdStatus = 'A';                 //OrdStatus is Fix 39, 'A' is 'Pending New'
     // Status state
 
-    // The constructor for a new order.
-    public Order(long clientId, int ClientOrderID, Instrument instrument, int size) {
-        this.clientID = clientId;
-        this.clientOrderID = ClientOrderID;
-        this.instrument = instrument;
-        this.size = size;
-        slices = new ArrayList<>();
-        fills = new ArrayList<>();
-    }
-
 	public Order(long clientId, int ClientOrderID, Instrument instrument, int size, double initialMarketPrice) {
 		this.clientID = clientId;
 		this.clientOrderID = ClientOrderID;
@@ -69,7 +59,8 @@ public class Order implements Serializable {
 
 	// Returns the total size remaining for the order to be completed.
 	public int sizeRemaining() {
-		return size - sizeFilled();
+		int sizeFilled = sizeFilled();
+		return size - sizeFilled; // pass by reference pass by value error?
 	}
 
 	// Not really sure what this is meant to do.
