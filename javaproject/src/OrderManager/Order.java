@@ -10,7 +10,7 @@ public class Order implements Serializable {
 	public int clientOrderID;
     long clientID;
 //	short orderRouter;
-	private int size;
+	public int size;
 //	double price;           // For recording the price the client wishes to pay/receive for this order. TODO: Harry says implement this.
 //	public int side;		// 1=Buy, 2=Sell.
     public Instrument instrument;

@@ -255,17 +255,33 @@ public class OrderManager {
 
 		// Create a new fill, ensuring that we don't exceed the total slice size.
 		Order slice = o.slices.get(sliceId);
-		int sizeLeftOver = 0;
-		if (fillSize > slice.sizeRemaining()) {
+		int sizeLeftOver = -1;
+		if (fillSize >= slice.sizeRemaining()) {
 			sizeLeftOver = fillSize - slice.sizeRemaining();
 			fillSize = slice.sizeRemaining();
 		}
-		slice.createFill(sliceId, fillSize, salePrice);
-		MyLogger.logFill(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, fillSize, salePrice);
-		// TODO: sizeLeftOver currently gets ignored, so we never do anything else with the remainder of slices... can we fill the rest of a slice with any leftovers?
+		
+		if (fillSize != 0) {
+			slice.createFill(sliceId, fillSize, salePrice);
+			MyLogger.logFill(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, fillSize, salePrice);
+		}
 
-		if (slice.OrdStatus == '2') // this is never being run
+		if (slice.OrdStatus == '2')
 			MyLogger.logInfo(OrderManager.class.getName(), "Slice ID: " + sliceId + " has been fully filled.");
+
+		// TODO: sizeLeftOver currently gets ignored, so we never do anything else with the remainder of slices... can we fill the rest of a slice with any leftovers?
+		// If sizeLeftOver >=0 and total Order isn't yet fully filled, we can add a new slice and start filling that.
+		if ((sizeLeftOver >= 0) && (o.sizeRemaining() > 0)) {
+			// Create new slice for the order.
+			int maxSliceSize = 100;
+			if (o.sizeRemaining() < maxSliceSize)
+				sliceOrder(id, o.sizeRemaining());
+			else
+				sliceOrder(id, maxSliceSize);
+
+			// Fill the slice with sizeLeftOver.
+			newFill(id, sliceId+1, sizeLeftOver);
+		}
 
 		sendOrderToTrader(id, o, TradeScreen.api.fill);
 
