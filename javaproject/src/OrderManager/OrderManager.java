@@ -27,7 +27,8 @@ public class OrderManager {
 	private Socket[] orderRouters;						 // debugger will skip these lines as they disappear at compile time into 'the object'/stack
 	private Socket[] clients;
 	private Socket trader;
-
+	private int orderID = 0;
+	private boolean set = false;
 	private Socket connect(InetSocketAddress location) throws InterruptedException {
 		boolean connected=false;
 		int tryCounter=0;
@@ -246,7 +247,6 @@ public class OrderManager {
 
 	private void newFill(int id, int sliceId, int fillSize) throws IOException {
 		Order o = orders.get(id);
-
 		// Calculate a sale price based on a random market fluctuation of up to 3% plus or minus from the initial market value.
 		double salePrice = o.initialMarketPrice;
 		double marketVariation = (salePrice*3/100)*RANDOM_NUM_GENERATOR.nextDouble(); // CHANGE: currently set to a variance of within 3% of the initial market value.

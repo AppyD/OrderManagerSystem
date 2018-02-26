@@ -1,5 +1,6 @@
 package Logger;
 
+import OrderClient.Client;
 import Ref.Instrument;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -29,12 +30,12 @@ public final class MyLogger {
     public static void logSlice(String className, int clientID, int clientOrderID, int sliceSize, Instrument instrument) {
         Logger logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4jv2.properties");
-        logger.info("SLICE --             -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Slice Size: " + sliceSize + " --  Instrument: " + instrument);
+        logger.info("SLICE -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Slice Size: " + sliceSize + " --  Instrument: " + instrument);
     }
 
-    public static  void logFill(String className, int clientID, int clientOrderID, int fillID, int sliceID, int size, double price) {
+    public static void logFill(String className, int clientID, int clientOrderID, int OrderID, int sliceID, int fillSize, double price) {
         Logger logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4jv2.properties");
-        logger.info("FILL  --             -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Fill ID: " + fillID + " -- Slice ID: " + sliceID + " -- Slice Size: " + size + " --  Price: " + price);
+        logger.info("FILL  -- ORDER ID: " + OrderID + " -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Slice ID: " + sliceID + " -- Fill Size: " + fillSize + " --  Price: " + price);
     }
 }
