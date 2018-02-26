@@ -71,9 +71,8 @@ public class OrderManager {
 
 		//repeat for the client connections
 		i = 0;
-
 		for (InetSocketAddress location : clients) {
-			this.clients[i]=connect(location);
+			this.clients[i] = connect(location);
 			i++;
 		}
 
@@ -136,7 +135,13 @@ public class OrderManager {
 						break;
 					case "endTrade":
 						endTrade(is.readInt(), (Order)is.readObject());
-						if (this.orders.size() == 0){
+						int ordersLeft = 0;
+						for (Order order: this.orders.values()){
+							if (order.sizeRemaining() != 0){
+								ordersLeft++;
+							}
+						}
+						if (ordersLeft == 0){
 							ordersToDo = false;
 						}
 						break;
@@ -166,7 +171,6 @@ public class OrderManager {
 	}
 
 	private void endTrade(int id, Order o){
-		this.orders.remove(id);
 		System.out.println("Order " + o.transactionID + " for client " + o.clientID + " has been completed.");
 	}
 
