@@ -47,21 +47,10 @@ class MockClient extends Thread {
 				//TODO client.sendCancel(orderID);
 				client.messageHandler();
 			} else {
-				if (port == 2004) { // differentiates between clients
-					client.sendOrder(); // creates and sends an order
-					int id = client.sendOrder();
-					//TODO client.sendCancel(orderID);
-					client.messageHandler();
-				} else {
 					client.sendOrder();
 					client.messageHandler();
 				}
-				client.sendOrder();
-				//TODO client.sendCancel(transactionID);
-				client.messageHandler();
-			}
-		}
-		catch(IOException e){
+		} catch(IOException e){
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
