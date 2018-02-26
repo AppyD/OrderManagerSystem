@@ -52,7 +52,6 @@ public class Order implements Serializable {
 
 	// Adds a new order to the 'slices' ArrayList, and returns the index of this new order within the List.
 	public int newSlice(int sliceSize) {
-		slices.add(new Order(transactionID, clientOrderID, instrument, sliceSize));
 		slices.add(new Order(clientID, clientOrderID, instrument, sliceSize)); // changed ID to clientID
 		final MyLogger logger = new MyLogger(Order.class.getName(), (int) clientID, clientOrderID, sliceSize, instrument);
 		return slices.size() - 1;
@@ -70,7 +69,8 @@ public class Order implements Serializable {
 
 	// Returns the total size remaining for the order to be completed.
 	public int sizeRemaining() {
-		return size - sizeFilled();
+    	int sizeFilled = sizeFilled();
+		return size - sizeFilled;
 	}
 
 	// Not really sure what this is meant to do.

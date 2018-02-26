@@ -45,6 +45,7 @@ public class SampleClient extends Mock implements Client{
 	public int sendOrder() throws IOException {
 		int size = RANDOM_NUM_GENERATOR.nextInt(5000);
 		int instID = RANDOM_NUM_GENERATOR.nextInt(instruments.size());
+		// changed from random number to index of INSTRUMENTS
 		Instrument instrument = instruments.keySet().toArray(new Instrument[instruments.size()-1])[instID];
 		double price = instruments.get(instrument);
 		NewOrderSingle nos = new NewOrderSingle(size,price,instrument);

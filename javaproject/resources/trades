@@ -461,3 +461,43 @@
 26-02-2018 10:16:45 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 1 -- Slice Size: 487 --  Price: 108.22081328253321
 26-02-2018 10:16:45 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 1 -- Slice Size: 442 --  Price: 92.2003377444906
 26-02-2018 10:16:46 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 1 -- Slice Size: 238 --  Price: 108.22081328253321
+26-02-2018 12:00:13 INFO [Order Manager] MyLogger - Starting systems...
+26-02-2018 12:00:13 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 0 -- Client ID: 0 -- Client Order ID: 0 -- Quantity: 714 --  Instrument: BT.L --  Price: 185.85468888825295
+26-02-2018 12:00:13 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 1 -- Client ID: 1 -- Client Order ID: 0 -- Quantity: 1213 --  Instrument: VOD.L --  Price: 145.25390474583284
+26-02-2018 12:00:13 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 2 -- Client ID: 0 -- Client Order ID: 1 -- Quantity: 2524 --  Instrument: VOD.L --  Price: 145.25390474583284
+26-02-2018 12:00:20 INFO [Order Manager] MyLogger - SLICE -- Client ID: 0 -- Client Order ID: 0 -- Slice Size: 714 --  Instrument: BT.L
+26-02-2018 12:00:20 INFO [Order Manager] MyLogger - SLICE -- Client ID: 1 -- Client Order ID: 0 -- Slice Size: 1000 --  Instrument: VOD.L
+26-02-2018 12:00:20 INFO [Order Manager] MyLogger - SLICE -- Client ID: 0 -- Client Order ID: 1 -- Slice Size: 1000 --  Instrument: VOD.L
+26-02-2018 12:00:20 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 1 -- Slice Size: 301 --  Price: 136.7764389003653
+26-02-2018 12:00:20 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 1 -- Slice Size: 644 --  Price: 13.021004165108554
+26-02-2018 12:00:20 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 1 -- Slice Size: 100 --  Price: 15.929963828290003
+26-02-2018 12:02:48 INFO [Order Manager] MyLogger - Starting systems...
+26-02-2018 12:02:48 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 0 -- Client ID: 0 -- Client Order ID: 0 -- Quantity: 4087 --  Instrument: VOD.L --  Price: 186.31567017710316
+26-02-2018 12:02:48 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 1 -- Client ID: 1 -- Client Order ID: 0 -- Quantity: 1101 --  Instrument: VOD.L --  Price: 186.31567017710316
+26-02-2018 12:02:48 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 2 -- Client ID: 0 -- Client Order ID: 1 -- Quantity: 4155 --  Instrument: VOD.L --  Price: 186.31567017710316
+26-02-2018 12:02:55 INFO [Order Manager] MyLogger - SLICE -- Client ID: 0 -- Client Order ID: 0 -- Slice Size: 1000 --  Instrument: VOD.L
+26-02-2018 12:02:55 INFO [Order Manager] MyLogger - SLICE -- Client ID: 1 -- Client Order ID: 0 -- Slice Size: 1000 --  Instrument: VOD.L
+26-02-2018 12:02:55 INFO [Order Manager] MyLogger - SLICE -- Client ID: 0 -- Client Order ID: 1 -- Slice Size: 1000 --  Instrument: VOD.L
+26-02-2018 12:02:55 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 1 -- Slice Size: 914 --  Price: 168.21699446181194
+26-02-2018 12:02:55 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 1 -- Slice Size: 627 --  Price: 110.88949871284836
+26-02-2018 12:02:55 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 1 -- Slice Size: 63 --  Price: 132.58761716120824
+26-02-2018 12:04:16 INFO [Order Manager] MyLogger - Starting systems...
+26-02-2018 12:04:16 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 0 -- Client ID: 0 -- Client Order ID: 0 -- Quantity: 129 --  Instrument: VOD.L --  Price: 122.4887133865159
+26-02-2018 12:04:16 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 1 -- Client ID: 1 -- Client Order ID: 0 -- Quantity: 2852 --  Instrument: BT.L --  Price: 95.27904192985712
+26-02-2018 12:04:16 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 2 -- Client ID: 0 -- Client Order ID: 1 -- Quantity: 3477 --  Instrument: VOD.L --  Price: 122.4887133865159
+26-02-2018 12:04:23 INFO [Order Manager] MyLogger - SLICE -- Client ID: 0 -- Client Order ID: 0 -- Slice Size: 129 --  Instrument: VOD.L
+26-02-2018 12:04:23 INFO [Order Manager] MyLogger - SLICE -- Client ID: 1 -- Client Order ID: 0 -- Slice Size: 1000 --  Instrument: BT.L
+26-02-2018 12:04:23 INFO [Order Manager] MyLogger - SLICE -- Client ID: 0 -- Client Order ID: 1 -- Slice Size: 1000 --  Instrument: VOD.L
+26-02-2018 12:04:23 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 50 --  Price: 122.4887133865159
+26-02-2018 12:04:23 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 488 --  Price: 122.4887133865159
+26-02-2018 12:04:23 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 637 --  Price: 98.2770727785143
+26-02-2018 12:06:04 INFO [Order Manager] MyLogger - Starting systems...
+26-02-2018 12:06:04 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 0 -- Client ID: 0 -- Client Order ID: 0 -- Quantity: 4263 --  Instrument: VOD.L --  Price: 113.62093223189554
+26-02-2018 12:06:04 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 1 -- Client ID: 1 -- Client Order ID: 0 -- Quantity: 4626 --  Instrument: BP.L --  Price: 84.44796538740492
+26-02-2018 12:06:04 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 2 -- Client ID: 0 -- Client Order ID: 1 -- Quantity: 2661 --  Instrument: BP.L --  Price: 84.44796538740492
+26-02-2018 12:06:11 INFO [Order Manager] MyLogger - SLICE -- Client ID: 0 -- Client Order ID: 0 -- Slice Size: 1000 --  Instrument: VOD.L
+26-02-2018 12:06:11 INFO [Order Manager] MyLogger - SLICE -- Client ID: 1 -- Client Order ID: 0 -- Slice Size: 1000 --  Instrument: BP.L
+26-02-2018 12:06:11 INFO [Order Manager] MyLogger - SLICE -- Client ID: 0 -- Client Order ID: 1 -- Slice Size: 1000 --  Instrument: BP.L
+26-02-2018 12:06:11 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 603 --  Price: 109.79492199313493
+26-02-2018 12:06:11 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 28 --  Price: 113.62093223189554
+26-02-2018 12:06:11 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 892 --  Price: 113.62093223189554
