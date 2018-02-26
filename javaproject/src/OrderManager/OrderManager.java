@@ -131,8 +131,6 @@ public class OrderManager {
 					case "sliceOrder":
 						sliceOrder(is.readInt(), is.readInt());
 						break;
-//					case "fill":
-//						newFill
 					case "endTrade":
 						endTrade(is.readInt(), (Order)is.readObject());
 						for (Order order: this.orders.values()){
@@ -306,7 +304,7 @@ public class OrderManager {
 			index = Integer.MAX_VALUE;
 			double bp = o.bestPrices[0];
 			for (int i=1; i<o.bestPrices.length; i++) {
-				if (bp > o.bestPrices[i]) {
+				if (bp < o.bestPrices[i]) {
 					index = i;
 					bp = o.bestPrices[i];
 				}
