@@ -212,17 +212,27 @@ public class OrderManager {
 
 	private void newFill(int id, int sliceId, int fillSize) throws IOException {
 		Order o = orders.get(id);
+
 		// Calculate a sale price based on a random market fluctuation of up to 3% plus or minus from the initial market value.
 		double salePrice = o.initialMarketPrice;
 		double marketVariation = (salePrice*3/100)*RANDOM_NUM_GENERATOR.nextDouble(); // CHANGE: currently set to a variance of within 3% of the initial market value.
-		if (RANDOM_NUM_GENERATOR.nextInt()%2 == 0)
+		if (RANDOM_NUM_GENERATOR.nextInt()%5 != 0) //will stay at market price in 20% of cases.
 			salePrice -= marketVariation;
 
-		o.slices.get(sliceId).createFill(sliceId, fillSize, salePrice);
+		// Create a new fill, ensuring that we don't exceed the total slice size.
+		Order slice = o.slices.get(sliceId);
+		int sizeLeftOver = 0;
+		if (fillSize > slice.sizeRemaining()) {
+			sizeLeftOver = fillSize - slice.sizeRemaining();
+			fillSize = slice.sizeRemaining();
+		}
+		slice.createFill(sliceId, fillSize, salePrice);
 		MyLogger logger = new MyLogger(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, fillSize, salePrice);
+		// TODO: sizeLeftOver currently gets ignored, so we never do anything else with the remainder of slices... can we fill the rest of a slice with any leftovers?
 
-		if (o.sizeRemaining() == 0) // this is never being run
-			logger.logInfo(OrderManager.class.getName(), "Order ID " + id + " has been fully filled.");
+		if (slice.OrdStatus == '2') // this is never being run
+			logger.logInfo(OrderManager.class.getName(), "Slice ID: " + sliceId + " has been fully filled.");
+
 		sendOrderToTrader(id, o, TradeScreen.api.fill);
 	}
 
