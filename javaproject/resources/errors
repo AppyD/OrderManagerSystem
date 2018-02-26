@@ -550,3 +550,9 @@ java.io.StreamCorruptedException: invalid stream header: 77180000
 	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:349)
 	at OrderManager.OrderManager.<init>(OrderManager.java:126)
 	at MockOM.run(Main.java:82)
+26-02-2018 16:02:25 ERROR [Order Manager] MyLogger - ISSUE
+java.io.OptionalDataException
+	at java.base/java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1597)
+	at java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:121)
+	at MockOM.run(Main.java:91)
