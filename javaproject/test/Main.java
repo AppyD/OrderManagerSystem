@@ -11,20 +11,20 @@ public class Main{
 
 		//Create and start 2 sample clients
 		MockClient c1 = new MockClient("Client 1",2000);
-		MockClient c2 = new MockClient("Client 2",2001);
+		//MockClient c2 = new MockClient("Client 2",2001);
 		c1.start();
-		c2.start();
+		//c2.start();
 		
 		//start sample routers
 		(new SampleRouter("Router LSE",2010)).start();
-		(new SampleRouter("Router BATE",2011)).start();
+		//(new SampleRouter("Router BATE",2011)).start();
 	
 		(new Trader("Trader James",2020)).start();
 		//start order manager
-		InetSocketAddress[] clients = {new InetSocketAddress("localhost",2000),
-									   new InetSocketAddress("localhost",2001)};
-		InetSocketAddress[] routers = {new InetSocketAddress("localhost",2010),
-		                     		   new InetSocketAddress("localhost",2011)};
+		InetSocketAddress[] clients = {new InetSocketAddress("localhost",2000)};//,
+									   //new InetSocketAddress("localhost",2001)};
+		InetSocketAddress[] routers = {new InetSocketAddress("localhost",2010)};//,
+		                     		   //new InetSocketAddress("localhost",2011)};
 		InetSocketAddress   trader  =  new InetSocketAddress("localhost",2020);
 		LiveMarketData liveMarketData = new SampleLiveMarketData();
 		(new MockOM("Order Manager", routers, clients, trader, liveMarketData)).start();
@@ -45,13 +45,13 @@ class MockClient extends Thread{
 			SampleClient client = new SampleClient(port);
 			if (port == 2000) {
 				client.sendOrder();
-				int id = client.sendOrder();
+				//int id = client.sendOrder();
 				//TODO client.sendCancel(transactionID);
 				client.messageHandler();
 			} else {
 				if (port == 2004) { // differentiates between clients
 					client.sendOrder(); // creates and sends an order
-					int id = client.sendOrder();
+					//int id = client.sendOrder();
 					//TODO client.sendCancel(transactionID);
 					client.messageHandler();
 				} else {

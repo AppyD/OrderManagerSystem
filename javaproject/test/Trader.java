@@ -48,11 +48,11 @@ public class Trader extends Thread implements TradeScreen {
 							break; //TODO
 						case fill:
 							fill(is.readInt(), (Order)is.readObject());
-							break; //TODO
+							break;
 					}
 				} else {
 					//System.out.println("Trader Waiting for data to be available - sleep 1s");
-//					Thread.sleep(1000);
+					Thread.sleep(1000);
 				}
 			}
 		} catch (ClassNotFoundException | InterruptedException e) {
@@ -104,8 +104,9 @@ public class Trader extends Thread implements TradeScreen {
 	// right now it is just set to flush the output stream so that the exception in Main is raised.
 	public void fill(int id, Order o) throws IOException{
 		os = new ObjectOutputStream(omConn.getOutputStream());
-		
+		os.writeObject("endTrade");
 		os.writeInt(id);
+		os.writeObject(o);
 		os.flush();
 	}
 }

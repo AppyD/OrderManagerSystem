@@ -238,3 +238,35 @@ java.io.OptionalDataException
 	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:427)
 	at OrderManager.OrderManager.<init>(OrderManager.java:125)
 	at MockOM.run(Main.java:88)
+26-02-2018 08:54:58 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.StreamCorruptedException: invalid type code: AC
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1563)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:137)
+	at MockOM.run(Main.java:88)
+26-02-2018 08:59:23 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.StreamCorruptedException: invalid type code: AC
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1563)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at OrderManager.OrderManager.<init>(OrderManager.java:137)
+	at MockOM.run(Main.java:88)
+26-02-2018 09:02:05 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.StreamCorruptedException: invalid type code: AC
+	at java.io.ObjectInputStream$BlockDataInputStream.readBlockHeader(ObjectInputStream.java:2814)
+	at java.io.ObjectInputStream$BlockDataInputStream.refill(ObjectInputStream.java:2848)
+	at java.io.ObjectInputStream$BlockDataInputStream.read(ObjectInputStream.java:2920)
+	at java.io.DataInputStream.readInt(DataInputStream.java:387)
+	at java.io.ObjectInputStream$BlockDataInputStream.readInt(ObjectInputStream.java:3125)
+	at java.io.ObjectInputStream.readInt(ObjectInputStream.java:1023)
+	at OrderManager.OrderManager.<init>(OrderManager.java:137)
+	at MockOM.run(Main.java:88)
+26-02-2018 09:04:05 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.StreamCorruptedException: invalid type code: AC
+	at java.io.ObjectInputStream$BlockDataInputStream.readBlockHeader(ObjectInputStream.java:2814)
+	at java.io.ObjectInputStream$BlockDataInputStream.refill(ObjectInputStream.java:2848)
+	at java.io.ObjectInputStream$BlockDataInputStream.read(ObjectInputStream.java:2920)
+	at java.io.DataInputStream.readInt(DataInputStream.java:387)
+	at java.io.ObjectInputStream$BlockDataInputStream.readInt(ObjectInputStream.java:3125)
+	at java.io.ObjectInputStream.readInt(ObjectInputStream.java:1023)
+	at OrderManager.OrderManager.<init>(OrderManager.java:137)
+	at MockOM.run(Main.java:88)

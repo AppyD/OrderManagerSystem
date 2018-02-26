@@ -8,6 +8,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import Database.Database;
 import LiveMarketData.LiveMarketData;
 import Logger.MyLogger;
@@ -19,7 +21,7 @@ import TradeScreen.TradeScreen;
 public class OrderManager {
 
 	private static LiveMarketData liveMarketData;
-	private Map<Integer,Order> orders = new HashMap<>(); // debugger will do this line as it gives state to the object
+	private Map<Integer,Order> orders = new ConcurrentHashMap<>(); // debugger will do this line as it gives state to the object
 														 // currently recording the number of new order messages we get. TODO why? use it for more?
 	// maybe we can use it for outstandingOrders, and remove any orders when they
 	private int id = 0; 								 // debugger will do this line as it gives state to the object
@@ -75,8 +77,9 @@ public class OrderManager {
 			i++;
 		}
 
+		boolean ordersToDo = true;
 		//main loop, wait for a message, then process it
-		while(true){
+		while(ordersToDo){
 
 			//TODO this is pretty cpu intensive, use a more modern polling/interrupt/select approach
 			//we want to use the array index as the clientId, so use traditional for loop instead of foreach
@@ -130,9 +133,41 @@ public class OrderManager {
 						break;
 					case "sliceOrder":
 						sliceOrder(is.readInt(), is.readInt());
+						break;
+					case "endTrade":
+						endTrade(is.readInt(), (Order)is.readObject());
+						if (this.orders.size() == 0){
+							ordersToDo = false;
+						}
+						break;
 				}
 			}
 		}
+		System.out.println("All orders have been processed. System exiting...");
+		// close router connections
+		i=0;
+		for (InetSocketAddress location : orderRouters) {
+			this.orderRouters[i].close();
+			i++;
+		}
+		System.out.println("Router connections have been closed.");
+		// close client connections
+		i = 0;
+		for (InetSocketAddress location : clients) {
+			this.clients[i].close();
+			i++;
+		}
+		System.out.println("Client connections have been closed.");
+		// close trader connection
+		this.trader.close();
+		System.out.println("Trader connection has closed.");
+		System.out.println("System closed successfully. Goodbye.");
+		System.exit(0);
+	}
+
+	private void endTrade(int id, Order o){
+		this.orders.remove(id);
+		System.out.println("Order " + o.transactionID + " for client " + o.clientID + " has been completed.");
 	}
 
 	private void newOrder(int clientID, int clientOrderID, NewOrderSingle nos) throws IOException {
