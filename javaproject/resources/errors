@@ -270,3 +270,21 @@ java.io.StreamCorruptedException: invalid type code: AC
 	at java.io.ObjectInputStream.readInt(ObjectInputStream.java:1023)
 	at OrderManager.OrderManager.<init>(OrderManager.java:137)
 	at MockOM.run(Main.java:88)
+26-02-2018 11:04:51 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.StreamCorruptedException: invalid stream header: 77040000
+	at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:857)
+	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:349)
+	at OrderManager.OrderManager.<init>(OrderManager.java:126)
+	at MockOM.run(Main.java:82)
+26-02-2018 11:06:46 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.StreamCorruptedException: invalid stream header: 77040000
+	at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:857)
+	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:349)
+	at OrderManager.OrderManager.<init>(OrderManager.java:126)
+	at MockOM.run(Main.java:82)
+26-02-2018 11:15:04 DEBUG [Order Manager] MockOM - SEVERE; null
+java.io.StreamCorruptedException: invalid stream header: 77180000
+	at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:857)
+	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:349)
+	at OrderManager.OrderManager.<init>(OrderManager.java:126)
+	at MockOM.run(Main.java:82)

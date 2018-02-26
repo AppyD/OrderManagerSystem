@@ -135,15 +135,12 @@ public class OrderManager {
 						break;
 					case "endTrade":
 						endTrade(is.readInt(), (Order)is.readObject());
-						int ordersLeft = 0;
 						for (Order order: this.orders.values()){
 							if (order.sizeRemaining() != 0){
-								ordersLeft++;
+								break;
 							}
 						}
-						if (ordersLeft == 0){
-							ordersToDo = false;
-						}
+						ordersToDo = false;
 						break;
 				}
 			}
@@ -267,7 +264,7 @@ public class OrderManager {
 			os.writeInt(id);
 			os.writeInt(sliceId);
 			os.writeObject(order.instrument);
-			os.writeInt(order.sizeRemaining());
+			os.writeInt(size); // changed order.sizeRemaining() to size
 			os.flush();
 		}
 

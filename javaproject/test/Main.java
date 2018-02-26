@@ -50,8 +50,8 @@ class MockClient extends Thread{
 				client.messageHandler();
 			}
 			else {
-				client.sendOrder();
-				client.messageHandler();
+				//client.sendOrder();
+				//client.messageHandler();
 				}
 		}
 		catch(IOException e){
