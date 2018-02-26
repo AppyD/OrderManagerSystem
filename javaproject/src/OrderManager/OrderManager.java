@@ -121,7 +121,7 @@ public class OrderManager {
 
 			if (this.trader != null && 0 < this.trader.getInputStream().available()) {
 				ObjectInputStream is = new ObjectInputStream(this.trader.getInputStream());
-				String method = (String) is.readObject();										//TODO: the exception is thrown here - no more data coming from the stream...
+				String method = (String) is.readObject(); //TODO: the exception is thrown here - no more data coming from the stream...
 				System.out.println(Thread.currentThread().getName() + " calling " + method);
 				switch (method) {
 					case "acceptOrder":
@@ -186,7 +186,7 @@ public class OrderManager {
 		internalCross(id, slice);
 		int sizeRemaining = o.slices.get(sliceId).sizeRemaining();
 		if (sizeRemaining > 0) {
-			routeOrder(id, sliceId, sizeRemaining, slice);
+			routeOrder(id, sliceId, sizeRemaining, slice); // problem with changing this to a while loop
 		}
 	}
 
@@ -212,7 +212,6 @@ public class OrderManager {
 
 	private void newFill(int id, int sliceId, int fillSize) throws IOException {
 		Order o = orders.get(id);
-
 		// Calculate a sale price based on a random market fluctuation of up to 3% plus or minus from the initial market value.
 		double salePrice = o.initialMarketPrice;
 		double marketVariation = (salePrice*3/100)*RANDOM_NUM_GENERATOR.nextDouble(); // CHANGE: currently set to a variance of within 3% of the initial market value.
@@ -257,7 +256,7 @@ public class OrderManager {
 		os.writeObject(Router.api.routeOrder);
 		os.writeInt((int) o.orderID);
 		os.writeInt(sliceId);
-		os.writeInt(o.sizeRemaining());
+		os.writeInt(o.sizeRemaining()); // total size remaining of order, not slices in order
 		os.writeObject(o.instrument);
 		os.flush();
 	}
