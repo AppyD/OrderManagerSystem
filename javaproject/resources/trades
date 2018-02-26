@@ -596,4 +596,13 @@
 26-02-2018 12:20:25 INFO [Order Manager] MyLogger - SLICE -- Client ID: 0 -- Client Order ID: 1 -- Slice Size: 1000 --  Instrument: BT.L
 26-02-2018 12:20:25 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 137 --  Price: 117.19377672067826
 26-02-2018 12:20:25 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 304 --  Price: 162.41795721534024
->>>>>>> a2aa809deade115f333a90bfc7599c2ed0a6d3f6
+26-02-2018 14:03:41 INFO [Order Manager] MyLogger - Starting systems...
+26-02-2018 14:03:41 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 0 -- Client ID: 0 -- Client Order ID: 0 -- Quantity: 30 --  Instrument: BT.L --  Price: 145.14928954323807
+26-02-2018 14:03:41 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 1 -- Client ID: 1 -- Client Order ID: 0 -- Quantity: 1450 --  Instrument: VOD.L --  Price: 33.911027948338365
+26-02-2018 14:03:41 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 2 -- Client ID: 0 -- Client Order ID: 1 -- Quantity: 2934 --  Instrument: BT.L --  Price: 145.14928954323807
+26-02-2018 14:03:48 INFO [Order Manager] MyLogger - SLICE -- Client ID: 0 -- Client Order ID: 0 -- Slice Size: 30 --  Instrument: BT.L
+26-02-2018 14:03:48 INFO [Order Manager] MyLogger - SLICE -- Client ID: 1 -- Client Order ID: 0 -- Slice Size: 1000 --  Instrument: VOD.L
+26-02-2018 14:03:48 INFO [Order Manager] MyLogger - SLICE -- Client ID: 0 -- Client Order ID: 1 -- Slice Size: 1000 --  Instrument: BT.L
+26-02-2018 14:03:48 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 27 --  Price: 19.482066026455996
+26-02-2018 14:03:48 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 776 --  Price: 108.9636144002779
+26-02-2018 14:03:48 INFO [Order Manager] MyLogger - FILL  -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 322 --  Price: 145.14928954323807

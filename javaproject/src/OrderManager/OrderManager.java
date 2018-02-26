@@ -53,7 +53,7 @@ public class OrderManager {
 						InetSocketAddress[] clients,
 						InetSocketAddress trader,
 						LiveMarketData liveMarketData) throws IOException, ClassNotFoundException, InterruptedException {
-		logger = new MyLogger(OrderManager.class.getName(), "Starting systems..."); // Signifies the start of the log for each run.
+		MyLogger.logInfo(OrderManager.class.getName(), "Starting systems..."); // Signifies the start of the log for each run.
 		this.liveMarketData = liveMarketData;
 		this.trader = connect(trader);
 		//for the router connections, copy the input array into our object field.
@@ -173,7 +173,7 @@ public class OrderManager {
 
 	private void newOrder(int clientID, int clientOrderID, NewOrderSingle nos) throws IOException {
 		orders.put(id, new Order(clientID, clientOrderID, nos.instrument, nos.size, nos.price));
-		logger = new MyLogger(OrderManager.class.getName(), id, clientID, clientOrderID, nos.size, nos.instrument, nos.price);
+		MyLogger.logOrder(OrderManager.class.getName(), id, clientID, clientOrderID, nos.size, nos.instrument, nos.price);
 		//send a message to the client with 39=A; //OrdStatus is Fix 39, 'A' is 'Pending New'
 		ObjectOutputStream os = new ObjectOutputStream(clients[clientID].getOutputStream());
 		//newOrderSingle acknowledgement;  //clientOrderID =11 (Fix 11?)
@@ -251,7 +251,8 @@ public class OrderManager {
 		if (price < salePrice)   // TODO: Check if this is correct - it is right for a buyer, as they would want to pay <= a maximum price (ie initialMarketPrice).
 			salePrice = price;   // Otherwise, use salePrice for the newFill, ie someone completed the fill at the asking price.
 		o.slices.get(sliceId).createFill(sliceId, size, salePrice);
-		final MyLogger logger = new MyLogger(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, size, salePrice);
+		MyLogger.logFill(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, size, salePrice);
+
 		if (o.sizeRemaining() == 0) // this is never being run
 			Database.write(o);
 		sendOrderToTrader(id, o, TradeScreen.api.fill);
