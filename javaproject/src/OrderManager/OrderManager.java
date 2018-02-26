@@ -27,7 +27,6 @@ public class OrderManager {
 	private Socket[] orderRouters;						 // debugger will skip these lines as they disappear at compile time into 'the object'/stack
 	private Socket[] clients;
 	private Socket trader;
-	private MyLogger logger;
 
 	private Socket connect(InetSocketAddress location) throws InterruptedException {
 		boolean connected=false;
@@ -169,7 +168,7 @@ public class OrderManager {
 	}
 
 	private void endTrade(int id, Order o){
-		System.out.println("Order " + o.transactionID + " for client " + o.clientID + " has been completed.");
+		System.out.println("Order " + o.orderID + " for client " + o.clientID + " has been completed.");
 	}
 
 	private void newOrder(int clientID, int clientOrderID, NewOrderSingle nos) throws IOException {
@@ -262,20 +261,16 @@ public class OrderManager {
 			fillSize = slice.sizeRemaining();
 		}
 		slice.createFill(sliceId, fillSize, salePrice);
-		MyLogger logger = new MyLogger(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, fillSize, salePrice);
+		MyLogger.logFill(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, fillSize, salePrice);
 		// TODO: sizeLeftOver currently gets ignored, so we never do anything else with the remainder of slices... can we fill the rest of a slice with any leftovers?
 
 		if (slice.OrdStatus == '2') // this is never being run
-			logger.logInfo(OrderManager.class.getName(), "Slice ID: " + sliceId + " has been fully filled.");
+			MyLogger.logInfo(OrderManager.class.getName(), "Slice ID: " + sliceId + " has been fully filled.");
 
-		if (price < salePrice)   // TODO: Check if this is correct - it is right for a buyer, as they would want to pay <= a maximum price (ie initialMarketPrice).
-			salePrice = price;   // Otherwise, use salePrice for the newFill, ie someone completed the fill at the asking price.
-		o.slices.get(sliceId).createFill(sliceId, size, salePrice);
-		MyLogger.logFill(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, size, salePrice);
-
-		if (o.sizeRemaining() == 0) // this is never being run
-			Database.write(o);
 		sendOrderToTrader(id, o, TradeScreen.api.fill);
+
+		// TODO: Check if this is correct - it is right for a buyer, as they would want to pay <= a maximum price (ie initialMarketPrice).
+		// TODO: Otherwise, use salePrice for the newFill, ie someone completed the fill at the asking price.
 	}
 
 	private void routeOrder(int id, int sliceId, int size, Order order) throws IOException {

@@ -726,3 +726,14 @@
 26-02-2018 14:04:35 INFO [Order Manager] MyLogger - FILL  --             -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 86 --  Price: 130.95780085664316
 26-02-2018 14:04:35 INFO [Order Manager] MyLogger - FILL  --             -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 14 --  Price: 127.75695210987165
 26-02-2018 14:04:35 INFO [Order Manager] MyLogger - Slice ID: 0 has been fully filled.
+26-02-2018 14:44:54 INFO [Order Manager] MyLogger - Starting systems...
+26-02-2018 14:44:55 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 0 -- Client ID: 0 -- Client Order ID: 0 -- Quantity: 1547 --  Instrument: VOD.L --  Price: 28.33685878316404
+26-02-2018 14:44:55 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 1 -- Client ID: 1 -- Client Order ID: 0 -- Quantity: 923 --  Instrument: BP.L --  Price: 132.36669530798204
+26-02-2018 14:44:55 INFO [Order Manager] MyLogger - ORDER -- ORDER ID: 2 -- Client ID: 0 -- Client Order ID: 1 -- Quantity: 2736 --  Instrument: BT.L --  Price: 17.335198020504034
+26-02-2018 14:45:02 INFO [Order Manager] MyLogger - SLICE --             -- Client ID: 0 -- Client Order ID: 0 -- Slice Size: 100 --  Instrument: VOD.L
+26-02-2018 14:45:02 INFO [Order Manager] MyLogger - SLICE --             -- Client ID: 1 -- Client Order ID: 0 -- Slice Size: 100 --  Instrument: BP.L
+26-02-2018 14:45:02 INFO [Order Manager] MyLogger - SLICE --             -- Client ID: 0 -- Client Order ID: 1 -- Slice Size: 100 --  Instrument: BT.L
+26-02-2018 14:45:02 INFO [Order Manager] MyLogger - FILL  --             -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 9 --  Price: 28.33685878316404
+26-02-2018 14:45:02 INFO [Order Manager] MyLogger - FILL  --             -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 42 --  Price: 28.33685878316404
+26-02-2018 14:45:02 INFO [Order Manager] MyLogger - FILL  --             -- Client ID: 0 -- Client Order ID: 0 -- Fill ID: 0 -- Slice ID: 0 -- Slice Size: 49 --  Price: 28.14486895674896
+26-02-2018 14:45:02 INFO [Order Manager] MyLogger - Slice ID: 0 has been fully filled.

@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+import Logger.MyLogger;
 import LiveMarketData.LiveMarketData;
 import OrderManager.OrderManager;
 
@@ -61,10 +60,6 @@ class MockClient extends Thread {
 				//TODO client.sendCancel(transactionID);
 				client.messageHandler();
 			}
-			else {
-				client.sendOrder();
-				client.messageHandler();
-				}
 		}
 		catch(IOException e){
 				// TODO Auto-generated catch block
@@ -94,9 +89,7 @@ class MockOM extends Thread{
 			new OrderManager(routers,clients,trader,liveMarketData);
 		}catch(IOException | ClassNotFoundException | InterruptedException ex){
 			// Set up logging
-			final Logger logger = Logger.getLogger(Main.class.getName());
-			PropertyConfigurator.configure("resources/log4j.properties");
-			logger.debug("SEVERE; null",ex);
+			MyLogger.logException(Main.class.getName(), "SEVERE; null", ex);
 		}
 	}
 }
