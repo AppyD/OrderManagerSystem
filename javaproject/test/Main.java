@@ -1,8 +1,7 @@
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import LiveMarketData.LiveMarketData;
+import Logger.MyLogger;
 import OrderManager.OrderManager;
 
 public class Main{
@@ -80,10 +79,7 @@ class MockOM extends Thread{
 			//In order to debug constructors you can do F5 F7 F5
 			new OrderManager(routers,clients,trader,liveMarketData);
 		}catch(IOException | ClassNotFoundException | InterruptedException ex){
-			// Set up logging
-			final Logger logger = Logger.getLogger(Main.class.getName());
-			PropertyConfigurator.configure("resources/log4j.properties");
-			logger.debug("SEVERE; null",ex);
+			MyLogger.logException(Main.class.getName(),"SEVERE; null", ex);
 		}
 	}
 }

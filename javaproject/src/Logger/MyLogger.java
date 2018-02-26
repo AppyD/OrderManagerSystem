@@ -12,10 +12,10 @@ public final class MyLogger {
         logger.info(string);
     }
 
-    public static void logException(String className, Exception ex) {
+    public static void logException(String className, String message, Exception ex) {
         Logger logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4j.properties");
-        logger.error("ISSUE", ex);
+        logger.error(message, ex);
     }
 
     public static void logOrder(String className, int OrderID, int clientID, int clientOrderID, int size, Instrument instrument, double price) {
