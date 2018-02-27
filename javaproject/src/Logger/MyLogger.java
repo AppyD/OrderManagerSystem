@@ -24,12 +24,10 @@ public final class MyLogger {
         Logger logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4jv2.properties");
         String tt;
-        if (tradeType){
+        if (tradeType)
             tt = "BUY";
-        }
-        else{
+        else
             tt = "SELL";
-        }
         logger.info("ORDER ID: " + OrderID + " -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Quantity: " + size + " --  Instrument: " + instrument + " --  Price: " + price + " -- " + tt);
     }
 
