@@ -171,7 +171,7 @@ public class OrderManager {
 
 	private void newOrder(int clientID, int clientOrderID, NewOrderSingle nos) throws IOException {
 		orders.put(id, new Order(clientID, clientOrderID, nos.instrument, nos.size, nos.price, nos.tradeType));
-		MyLogger.logOrder(OrderManager.class.getName(), id, clientID, clientOrderID, nos.size, nos.instrument, nos.price);
+		MyLogger.logOrder(OrderManager.class.getName(), id, clientID, clientOrderID, nos.size, nos.instrument, nos.price, nos.tradeType);
 		//send a message to the client with 39=A; //OrdStatus is Fix 39, 'A' is 'Pending New'
 		ObjectOutputStream os = new ObjectOutputStream(clients[clientID].getOutputStream());
 		//newOrderSingle acknowledgement;  //clientOrderID =11 (Fix 11?)
@@ -323,7 +323,7 @@ public class OrderManager {
 			}
 		}
 		else{   // want highest price available when selling
-			index = Integer.MAX_VALUE;
+			index = 0;
 			double bp = o.bestPrices[0];
 			for (int i=1; i<o.bestPrices.length; i++) {
 				if (bp < o.bestPrices[i]) {

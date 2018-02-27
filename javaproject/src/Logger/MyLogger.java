@@ -20,10 +20,17 @@ public final class MyLogger {
         logger.error(message, ex);
     }
 
-    public static void logOrder(String className, int OrderID, int clientID, int clientOrderID, int size, Instrument instrument, double price) {
+    public static void logOrder(String className, int OrderID, int clientID, int clientOrderID, int size, Instrument instrument, double price, Boolean tradeType) {
         Logger logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4jv2.properties");
-        logger.info("ORDER ID: " + OrderID + " -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Quantity: " + size + " --  Instrument: " + instrument + " --  Price: " + price);
+        String tt;
+        if (tradeType){
+            tt = "BUY";
+        }
+        else{
+            tt = "SELL";
+        }
+        logger.info("ORDER ID: " + OrderID + " -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Quantity: " + size + " --  Instrument: " + instrument + " --  Price: " + price + " -- " + tt);
     }
 
     public static void logSlice(String className, int clientID, int clientOrderID, int sliceID, int sliceSize, Instrument instrument) {
@@ -35,7 +42,7 @@ public final class MyLogger {
     public static  void logFill(String className, int clientID, int clientOrderID, int sliceID, int size, double price) {
         Logger logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4jv2.properties");
-        logger.info("FILL  --             -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Fill ID: " + fillID + " -- Slice ID: " + sliceID + " -- Fill Size:  " + size + " --  Price: " + price);
+
         logger.info("FILL        -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Slice ID: " + sliceID + " -- Fill Size:  " + size + " --  Price: " + price);
     }
 }
