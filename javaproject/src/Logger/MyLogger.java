@@ -35,9 +35,6 @@ public final class MyLogger {
     public static  void logFill(String className, int clientID, int clientOrderID, int fillID, int sliceID, int size, double price) {
         Logger logger = org.apache.log4j.Logger.getLogger(className);
         PropertyConfigurator.configure("resources/log4jv2.properties");
-<<<<<<< HEAD
         logger.info("FILL  --             -- Client ID: " + clientID + " -- Client Order ID: " + clientOrderID + " -- Fill ID: " + fillID + " -- Slice ID: " + sliceID + " -- Fill Size:  " + size + " --  Price: " + price);
-=======
->>>>>>> e73d54b04587e81f58f69f18bdd4a0764263b331
     }
 }
