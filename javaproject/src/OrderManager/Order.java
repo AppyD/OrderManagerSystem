@@ -43,8 +43,9 @@ public class Order implements Serializable {
 
 	// Adds a new order to the 'slices' ArrayList, and returns the index of this new order within the List.
 	public int newSlice(int sliceSize) {
+		int sliceID = slices.size();
 		slices.add(new Order(clientID, clientOrderID, instrument, sliceSize, initialMarketPrice)); // changed ID to clientID
-		MyLogger.logSlice(Order.class.getName(), (int) clientID, clientOrderID, sliceSize, instrument);
+		MyLogger.logSlice(Order.class.getName(), (int) clientID, clientOrderID, sliceID, sliceSize, instrument);
 		return slices.size() - 1;
 	}
 

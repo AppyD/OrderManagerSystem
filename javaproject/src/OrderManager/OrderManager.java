@@ -253,21 +253,27 @@ public class OrderManager {
 		if (RANDOM_NUM_GENERATOR.nextInt()%5 != 0) //will stay at market price in 20% of cases.
 			salePrice -= marketVariation;
 
-		// Create a new fill, ensuring that we don't exceed the total slice size.
+		// Add a check to make sure current slice hasn't been filled - if it has, then change the sliceID to the latest unfilled slice.
 		Order slice = o.slices.get(sliceId);
+		while (slice.sizeRemaining() == 0) {
+			sliceId++;
+			slice = o.slices.get(sliceId);
+		}
+
+		// Create a new fill, ensuring that we don't exceed the total slice size.
 		int sizeLeftOver = -1;
 		if (fillSize >= slice.sizeRemaining()) {
 			sizeLeftOver = fillSize - slice.sizeRemaining();
 			fillSize = slice.sizeRemaining();
 		}
-		
+
+		// Create a new fill if the fill size is non-zero.
 		if (fillSize != 0) {
 			slice.createFill(sliceId, fillSize, salePrice);
-			MyLogger.logFill(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, id, sliceId, fillSize, salePrice);
+			MyLogger.logFill(OrderManager.class.getName(), (int) o.clientID, o.clientOrderID, sliceId, fillSize, salePrice);
+			if (slice.OrdStatus == '2')
+				MyLogger.logInfo(OrderManager.class.getName(), "Slice ID: " + sliceId + " has been fully filled.");
 		}
-
-		if (slice.OrdStatus == '2')
-			MyLogger.logInfo(OrderManager.class.getName(), "Slice ID: " + sliceId + " has been fully filled.");
 
 		// TODO: sizeLeftOver currently gets ignored, so we never do anything else with the remainder of slices... can we fill the rest of a slice with any leftovers?
 		// If sizeLeftOver >=0 and total Order isn't yet fully filled, we can add a new slice and start filling that.
